@@ -1,0 +1,109 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
+
+const App = () => {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  return (
+  <ScrollView contentContainerStyle={estilo.scroll}>
+    <View style={estilo.tela}>
+      <View style={estilo.cabecalho}>
+        <TouchableOpacity>
+          <Image source={require('./assets/flecha_voltar.png')} />
+        </TouchableOpacity>
+        <Text style={estilo.txtcabecalho}>Nova Conta</Text>
+      </View>
+
+      <View style={estilo.corpo}>
+        <Text style={estilo.txtCorpo}>E-mail</Text>
+          <TextInput
+            style={estilo.txtEntrada}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+
+        <Text style={estilo.txtCorpo}>Senha</Text>
+          <TextInput
+            style={estilo.txtEntrada}
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry={true}
+          />
+
+        <Text style={estilo.txtCorpo}>Repetir senha</Text>
+          <TextInput
+            style={estilo.txtEntrada}
+            secureTextEntry={true}
+          />
+          <TouchableOpacity style={estilo.botao}>
+            <Text style={estilo.txtBotao}>Cadastrar</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
+  );
+};
+
+const estilo = StyleSheet.create({
+  tela: {
+    flex: 1,
+    backgroundColor: '#372775',
+  },
+
+  scroll: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
+
+  cabecalho: {
+    backgroundColor: '#2B1D62',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+  },
+
+  txtcabecalho: {
+    color: '#FFFFFF',
+    fontFamily: 'Averia Libre',
+    fontSize: 48,
+    marginLeft: 20,
+  },
+
+  corpo: {
+    paddingHorizontal: 150,
+    paddingTop: 20,
+  },
+
+  txtCorpo: {
+    fontSize: 28,
+    fontFamily: 'Averia Libre',
+    color: '#FFFFFF',
+    marginBottom: 10,
+  },
+
+  txtEntrada: {
+    fontSize: 18,
+    fontFamily: 'Averia Libre',
+    backgroundColor: '#FFFFFF',
+    padding: 10,
+    marginBottom: 20,
+    color: '#3F92C5',
+  },
+
+  botao: {
+    backgroundColor: '#37BD6D',
+    padding: 10,
+    marginTop: 10,
+  },
+
+  txtBotao: {
+    fontSize: 24,
+    fontFamily: 'Averia Libre',
+    color: '#FFFFFF',
+    textAlign: 'center',
+  },
+});
+
+export default App;
