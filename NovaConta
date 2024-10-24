@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput} from 'react-native';
 
 const App = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
   return (
-  <ScrollView contentContainerStyle={estilo.scroll}>
     <View style={estilo.tela}>
       <View style={estilo.cabecalho}>
         <TouchableOpacity>
@@ -38,11 +37,10 @@ const App = () => {
             secureTextEntry={true}
           />
           <TouchableOpacity style={estilo.botao}>
-            <Text style={estilo.txtBotao}>Cadastrar</Text>
+            <Text style={estilo.txtBotao}>CADASTRAR</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
   );
 };
 
@@ -52,28 +50,25 @@ const estilo = StyleSheet.create({
     backgroundColor: '#372775',
   },
 
-  scroll: {
-    flexGrow: 1,
-    justifyContent: 'space-between',
-  },
-
   cabecalho: {
     backgroundColor: '#2B1D62',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    marginBottom: 30,
+    height: 97,
   },
 
   txtcabecalho: {
     color: '#FFFFFF',
     fontFamily: 'Averia Libre',
     fontSize: 48,
-    marginLeft: 20,
+    marginLeft: 30,
   },
 
   corpo: {
-    paddingHorizontal: 150,
-    paddingTop: 20,
+    paddingHorizontal: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   txtCorpo: {
@@ -81,25 +76,27 @@ const estilo = StyleSheet.create({
     fontFamily: 'Averia Libre',
     color: '#FFFFFF',
     marginBottom: 10,
+    width: '100%',
   },
 
   txtEntrada: {
-    fontSize: 18,
+    fontSize: 28,
     fontFamily: 'Averia Libre',
     backgroundColor: '#FFFFFF',
-    padding: 10,
     marginBottom: 20,
     color: '#3F92C5',
+    width: '100%',
   },
 
   botao: {
     backgroundColor: '#37BD6D',
     padding: 10,
-    marginTop: 10,
+    marginTop: 80,
+    width: '100%',
   },
 
   txtBotao: {
-    fontSize: 24,
+    fontSize: 28,
     fontFamily: 'Averia Libre',
     color: '#FFFFFF',
     textAlign: 'center',
