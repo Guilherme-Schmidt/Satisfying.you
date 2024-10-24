@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
 
 const App = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [senhaTemp, setSenhaTemp] = useState('');
+  const [erroSenha, setErroSenha] = useState('');
+
+  const difSenha = () => {
+    if (senha !== senhaTemp) {
+      setErroSenha('O campo repetir senha difere da senha');
+    } else {
+      setErroSenha('');
+    }
+  };
 
   return (
     <View style={estilo.tela}>
@@ -16,31 +26,41 @@ const App = () => {
 
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>E-mail</Text>
-          <TextInput
-            style={estilo.txtEntrada}
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
+        <TextInput
+          style={estilo.txtEntrada}
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
 
         <Text style={estilo.txtCorpo}>Senha</Text>
-          <TextInput
-            style={estilo.txtEntrada}
-            value={senha}
-            onChangeText={setSenha}
-            secureTextEntry={true}
-          />
+        <TextInput
+          style={estilo.txtEntrada}
+          value={senha}
+          onChangeText={setSenha}
+          secureTextEntry={true}
+        />
 
         <Text style={estilo.txtCorpo}>Repetir senha</Text>
-          <TextInput
-            style={estilo.txtEntrada}
-            secureTextEntry={true}
-          />
-          <TouchableOpacity style={estilo.botao}>
-            <Text style={estilo.txtBotao}>CADASTRAR</Text>
-          </TouchableOpacity>
-        </View>
+        <TextInput
+          style={estilo.txtEntrada}
+          value={senhaTemp}
+          onChangeText={setSenhaTemp}
+          secureTextEntry={true}
+        />
       </View>
+
+      {/* Espaço reservado para a mensagem de erro */}
+      <View style={estilo.erroContainer}>
+        {erroSenha ? <Text style={estilo.erro}>{erroSenha}</Text> : null}
+      </View>
+
+      <View style={estilo.rodape}>
+        <TouchableOpacity style={estilo.botao} onPress={difSenha}>
+          <Text style={estilo.txtBotao}>CADASTRAR</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
@@ -67,8 +87,6 @@ const estilo = StyleSheet.create({
 
   corpo: {
     paddingHorizontal: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   txtCorpo: {
@@ -83,15 +101,28 @@ const estilo = StyleSheet.create({
     fontSize: 28,
     fontFamily: 'Averia Libre',
     backgroundColor: '#FFFFFF',
-    marginBottom: 20,
+    marginBottom: 5,
     color: '#3F92C5',
     width: '100%',
+  },
+
+  erroContainer: {
+    height: 40,
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
+    paddingHorizontal: 200,
+  },
+
+  rodape: {
+    paddingHorizontal: 200,
+    marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   botao: {
     backgroundColor: '#37BD6D',
     padding: 10,
-    marginTop: 80,
     width: '100%',
   },
 
@@ -101,6 +132,13 @@ const estilo = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
   },
+
+  erro: {
+    fontSize: 24,
+    fontFamily: 'Averia Libre',
+    color: '#FD7979',
+    textAlign: 'left',
+  }
 });
 
 export default App;
