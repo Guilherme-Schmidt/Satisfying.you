@@ -50,7 +50,6 @@ const App = () => {
         />
       </View>
 
-      {/* Espaço reservado para a mensagem de erro */}
       <View style={estilo.erroContainer}>
         {erroSenha ? <Text style={estilo.erro}>{erroSenha}</Text> : null}
       </View>
