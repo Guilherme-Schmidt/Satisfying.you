@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
@@ -8,13 +7,16 @@ const AcoesPesquisa = () => {
     <View style={estilos.tela}>
 
       <View style={estilos.header}>
+
         <TouchableOpacity style={estilos.iconVoltar}>
           <Image  style={{height: 33, width: 33}} source={require("./Assets/flecha_voltar.png")}/>
         </TouchableOpacity>
         <Text style={estilos.txtHeader}>Carnaval</Text>
+
       </View>
 
       <View style={estilos.cCards}>
+
         <TouchableOpacity style={estilos.cIcon}>
           <Image style={{height:65, width:65}} source={require("./Assets/modificar.png")}/>
           <Text style={estilos.txtIcon}>Modificar</Text>
