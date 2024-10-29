@@ -79,7 +79,7 @@ const estilo = StyleSheet.create({
 
   txtcabecalho: {
     color: '#FFFFFF',
-    fontFamily: 'Averia Libre',
+    fontFamily: 'AveriaLibre-Regular',
     fontSize: 48,
     marginLeft: 30,
   },
@@ -90,7 +90,7 @@ const estilo = StyleSheet.create({
 
   txtCorpo: {
     fontSize: 28,
-    fontFamily: 'Averia Libre',
+    fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
     marginBottom: 10,
     width: '100%',
@@ -98,7 +98,7 @@ const estilo = StyleSheet.create({
 
   txtEntrada: {
     fontSize: 28,
-    fontFamily: 'Averia Libre',
+    fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     marginBottom: 5,
     color: '#3F92C5',
@@ -127,14 +127,14 @@ const estilo = StyleSheet.create({
 
   txtBotao: {
     fontSize: 28,
-    fontFamily: 'Averia Libre',
+    fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
     textAlign: 'center',
   },
 
   erro: {
     fontSize: 24,
-    fontFamily: 'Averia Libre',
+    fontFamily: 'AveriaLibre-Regular',
     color: '#FD7979',
     textAlign: 'left',
   }
