@@ -132,7 +132,7 @@ const estilo = StyleSheet.create({
   },
 
   espacamentoSenha: {
-    marginBottom: 45, // Aumenta o espaço abaixo do campo de senha
+    marginBottom: 45,
   },
 
   erro: {
