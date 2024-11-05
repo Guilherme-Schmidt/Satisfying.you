@@ -5,14 +5,27 @@ const App = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaTemp, setSenhaTemp] = useState('');
-  const [erroSenha, setErroSenha] = useState('');
+  const [erroSenha, setErroSenha] = useState(false);
+  const [erroEmail, setErroEmail] = useState(false);
 
   const difSenha = () => {
     if (senha !== senhaTemp) {
-      setErroSenha('O campo repetir senha difere da senha');
+      setErroSenha(true);
     } else {
-      setErroSenha('');
+      setErroSenha(false);
     }
+  };
+
+  const emailPadrao = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const validarEmail = (email) => {
+    setErroEmail(!emailPadrao.test(email));
+    setEmail(email);
+  };
+
+  const validarCadastro = () => {
+    validarEmail(email);
+    difSenha();
   };
 
   return (
@@ -32,10 +45,18 @@ const App = () => {
           onChangeText={setEmail}
           keyboardType="email-address"
         />
+        <Text
+          style={[
+            estilo.erro,
+            { color: erroEmail ? '#FD7979' : '#372775' },
+          ]}
+        >
+          Formato de e-mail inválido
+        </Text>
 
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
-          style={estilo.txtEntrada}
+          style={[estilo.txtEntrada, estilo.espacamentoSenha]}
           value={senha}
           onChangeText={setSenha}
           secureTextEntry={true}
@@ -48,14 +69,18 @@ const App = () => {
           onChangeText={setSenhaTemp}
           secureTextEntry={true}
         />
-      </View>
-
-      <View style={estilo.erroContainer}>
-        {erroSenha ? <Text style={estilo.erro}>{erroSenha}</Text> : null}
+        <Text
+          style={[
+            estilo.erro,
+            { color: erroSenha ? '#FD7979' : '#372775' },
+          ]}
+        >
+          O campo repetir senha difere da senha
+        </Text>
       </View>
 
       <View style={estilo.rodape}>
-        <TouchableOpacity style={estilo.botao} onPress={difSenha}>
+        <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
           <Text style={estilo.txtBotao}>CADASTRAR</Text>
         </TouchableOpacity>
       </View>
@@ -100,44 +125,41 @@ const estilo = StyleSheet.create({
     fontSize: 28,
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
-    marginBottom: 5,
+    marginBottom: 10,
     color: '#3F92C5',
     width: '100%',
+    padding: 10,
   },
 
-  erroContainer: {
-    height: 40,
-    justifyContent: 'flex-start',
-    alignContent: 'flex-start',
-    paddingHorizontal: 200,
+  espacamentoSenha: {
+    marginBottom: 45, // Aumenta o espaço abaixo do campo de senha
+  },
+
+  erro: {
+    fontSize: 20,
+    fontFamily: 'AveriaLibre-Regular',
+    marginBottom: 15,
   },
 
   rodape: {
     paddingHorizontal: 200,
-    marginTop: 50,
+    marginTop: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  
   botao: {
     backgroundColor: '#37BD6D',
     padding: 10,
     width: '100%',
   },
-
+  
   txtBotao: {
     fontSize: 28,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
     textAlign: 'center',
   },
-
-  erro: {
-    fontSize: 24,
-    fontFamily: 'AveriaLibre-Regular',
-    color: '#FD7979',
-    textAlign: 'left',
-  }
 });
 
 export default App;
