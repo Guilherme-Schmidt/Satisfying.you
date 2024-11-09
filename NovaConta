@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
 
-const App = () => {
+const NovaConta = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaTemp, setSenhaTemp] = useState('');
@@ -162,4 +162,4 @@ const estilo = StyleSheet.create({
   },
 });
 
-export default App;
+export default NovaConta;
