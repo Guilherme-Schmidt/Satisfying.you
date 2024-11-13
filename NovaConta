@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const NovaConta = () => {
   const [email, setEmail] = useState('');
@@ -7,7 +8,7 @@ const NovaConta = () => {
   const [senhaTemp, setSenhaTemp] = useState('');
   const [erroSenha, setErroSenha] = useState(false);
   const [erroEmail, setErroEmail] = useState(false);
-
+  const navigation = useNavigation();
   const difSenha = () => {
     if (senha !== senhaTemp) {
       setErroSenha(true);
@@ -31,7 +32,7 @@ const NovaConta = () => {
   return (
     <View style={estilo.tela}>
       <View style={estilo.cabecalho}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Image source={require('./assets/flecha_voltar.png')} />
         </TouchableOpacity>
         <Text style={estilo.txtcabecalho}>Nova Conta</Text>
