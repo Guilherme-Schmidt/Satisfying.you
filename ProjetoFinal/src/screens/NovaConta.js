@@ -35,9 +35,7 @@ const NovaConta = () => {
     <View style={estilo.tela}>
       <View style={estilo.cabecalho}>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Image source={require('../../assets/images/imagem.png')} />
         </TouchableOpacity>
-        <Text style={estilo.txtcabecalho}>Nova Conta</Text>
       </View>
 
       <View style={estilo.corpo}>
@@ -97,13 +95,7 @@ const estilo = StyleSheet.create({
     backgroundColor: '#372775',
   },
 
-  cabecalho: {
-    backgroundColor: '#2B1D62',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    height: 97,
-  },
+  
 
   txtcabecalho: {
     color: '#FFFFFF',

@@ -33,7 +33,7 @@ const Login = ({  }) => {
     <View style={estilos.tela}>
       <View style={estilos.header}>
         <Text style={estilos.title}>Satisfying.you</Text>
-        <Icon name="sentiment-satisfied" size={30} color="#FFFFFF" style={estilos.icon} />
+        <Icon name="sentiment-satisfied" size={30} style={estilos.icon} />
       </View>
 
       <View style={estilos.cPrincipal}>
@@ -69,8 +69,9 @@ const Login = ({  }) => {
 
         <TouchableOpacity
           style={[estilos.botaoCriarFundo, { marginTop: 10 }]}
+          onPress={goToNovaConta}
         >
-          <Text style={estilos.botaoCriarText} onPress={goToNovaConta}>Criar minha conta</Text>
+          <Text style={estilos.botaoCriarText}>Criar minha conta</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={estilos.botaoSenha}>
