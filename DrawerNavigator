@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -26,9 +25,8 @@ function Home() {
   );
 }
 
-const App = () => {
+const DrawerNavigator = () => {
   return (
-    <NavigationContainer>
       <Drawer.Navigator 
         initialRouteName="Home" 
         drawerContent={props => <CustomDrawerContent {...props} />}
@@ -49,7 +47,6 @@ const App = () => {
           }}
         />
       </Drawer.Navigator>
-    </NavigationContainer>
   );
 }
 
@@ -95,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default DrawerNavigator;
