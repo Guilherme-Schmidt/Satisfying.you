@@ -20,7 +20,7 @@ const App = () => {
             color: '#FFFFFF',
           },
           headerBackImage: () => (
-            <Icon name="arrow-back" size={35} color="#573FBA" /> // Personalizar o tamanho da seta, utiliza-se Retorno implícito significa que não há necessidade de usar return, pois o valor entre os parênteses é automaticamente retornado pela função anonima, nesse caso retorna um elemento de interface jsx.
+            <Icon name="arrow-back" size={35} color="#573FBA" /> // Personalizar o tamanho da seta
           ),
         }}>
         <Stack.Screen name="Login" component={Login} />
