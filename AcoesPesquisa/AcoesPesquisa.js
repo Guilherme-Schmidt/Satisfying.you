@@ -1,80 +1,54 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const AcoesPesquisa = () => {
+const AcoesPesquisa = (props) => {
+  
+  const goToModificarPesquisa = () => {
+    props.navigation.navigate('ModificarPesquisa');//verificar nome da tela e componente em Stack.Screen 
+  };
+
+  const goToColetarDados = () => {
+    props.navigation.navigate('Coleta'); //verificar nome da tela e componente em Stack.Screen
+  };
+
+  const goToRelatorio = () => {
+    props.navigation.navigate('Relatorio'); //verificar nome da tela e componente em Stack.Screen
+  };
+
   return (
     <View style={estilos.tela}>
-
-      <View style={estilos.header}>
-        <TouchableOpacity style={estilos.iconVoltar}>
-          <Icon name="arrow-back" size={55} color="#573FBA" />
-        </TouchableOpacity>
-        <Text style={estilos.txtHeader}>Carnaval</Text>
-      </View>
-
-      <View style={estilos.cCards}>
-        <TouchableOpacity style={estilos.cIcon}>
-          <Image
-            style={estilos.image}
-            source={require('./assets/images/modificar.png')}
-          />
+      
+        <TouchableOpacity style={estilos.iconContainer} onPress={goToModificarPesquisa}>
+          <Icon name="edit-note" size={80} color="#FFFFFF" />
           <Text style={estilos.txtIcon}>Modificar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={estilos.cIcon}>
-          <Image
-            style={estilos.image}
-            source={require('./assets/images/coletar_dados.png')}
-          />
+        <TouchableOpacity style={estilos.iconContainer} onPress={goToColetarDados}>
+          <Icon name="library-add-check" size={80} color="#FFFFFF" />
           <Text style={estilos.txtIcon}>Coletar dados</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={estilos.cIcon}>
-          <Image
-            style={estilos.image}
-            source={require('./assets/images/relatorio.png')}
-          />
+        <TouchableOpacity style={estilos.iconContainer} onPress={goToRelatorio}>
+          <Icon name="donut-large" size={80} color="#FFFFFF" />
           <Text style={estilos.txtIcon}>Relatório</Text>
         </TouchableOpacity>
-      </View>
-      
+    
     </View>
   );
 };
+
 const estilos = StyleSheet.create({
+
   tela: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
     backgroundColor: '#372775',
   },
 
-  header: {
-    flex: 0.2,
-    flexDirection: 'row',
-    backgroundColor: '#2B1D62',
-    alignItems: 'center',
-  },
-
-  txtHeader: {
-    fontSize: 35,
-    fontFamily: 'AveriaLibre-Regular',
-    color: '#FFFFFF',
-    marginLeft: '3%',
-  },
-
-  iconVoltar: {
-    marginLeft: '2%',
-  },
-
-  cCards: {
-    flex: 0.8,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-
-  cIcon: {
+  iconContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -84,17 +58,12 @@ const estilos = StyleSheet.create({
     borderRadius: 10,
   },
 
-  image: {
-    height: 70,
-    width: 70,
-  },
-
   txtIcon: {
     color: '#FFFFFF',
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     marginTop: 10,
-  },
+  }
 });
 
 export default AcoesPesquisa;

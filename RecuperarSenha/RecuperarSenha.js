@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const RecuperarSenha = () => {
+
+const RecuperarSenha = (props) => {
   const [email, setEmail] = useState('');
   const [erroEmail, setErroEmail] = useState('');
 
@@ -23,18 +23,14 @@ const RecuperarSenha = () => {
     }
   };
 
+  const goToLogin = () => {
+    props.navigation.pop();
+  }
+
   return (
     <View style={estilos.tela}>
-
-      <View style={estilos.header}>
-        <TouchableOpacity style={estilos.iconVoltar}>
-          <Icon name="arrow-back" size={55} color="#573FBA" />
-        </TouchableOpacity>
-        <Text style={estilos.txtHeader}>Recuperação de senha</Text>
-      </View>
-
-      <View style={estilos.cPrincipal}>
-        <View style={estilos.cInput}>
+     
+        <View style={estilos.inputContainer}>
           <Text style={estilos.txtEmail}>E-mail</Text>
           <TextInput
             value={email}
@@ -44,11 +40,10 @@ const RecuperarSenha = () => {
             autoCapitalize="none"></TextInput>
           <Text style={estilos.txtErro}>{erroEmail}</Text>
         </View>
-        <TouchableOpacity style={estilos.botaoFundo}>
+        <TouchableOpacity style={estilos.botaoContainer} onPress={goToLogin}>
           <Text style={estilos.txtBotao}>RECUPERAR</Text>
         </TouchableOpacity>
-      </View>
-      
+     
     </View>
   );
 };
@@ -57,45 +52,22 @@ const estilos = StyleSheet.create({
   tela: {
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#372775',
   },
 
-  header: {
-    flex: 0.2,
-    flexDirection: 'row',
-    backgroundColor: '#2B1D62',
-    alignItems: 'center',
-  },
-
-  txtHeader: {
-    fontSize: 33,
-    fontFamily: 'AveriaLibre-Regular',
-    color: '#FFFFFF',
-    marginLeft: '3.5%',
-  },
-
-  iconVoltar: {
-    marginLeft: '2%',
-  },
-
-  cPrincipal: {
-    flex: 0.8,
+  inputContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#372775',
+    width: '75%',
   },
 
-  cInput: {
-    justifyContent: 'center',
-    width: '60%',
-  },
-
-  botaoFundo: {
+  botaoContainer: {
     backgroundColor: '#49B976',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '60%',
+    width: '75%',
     height: '15%',
     marginTop: '5%',
     elevation: 10,
