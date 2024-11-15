@@ -1,33 +1,26 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
-import Tela_Home from './Tela_Home';
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
-
-
-const PopUp = () => {
-  const navigation = useNavigation(); 
-
-  const goToHome = () =>{
-    navigation.navigate('Tela_Home');
-  };
-
+const PopUp = ({ visible, onConfirm, onCancel }) => {
   return (
-    <View style={estilo.container}>
-      <View style={estilo.popUp}>
-        <View>
+    <Modal
+      visible={visible}
+      transparent={true}
+      animationType="fade" // Animação para exibir o modal
+    >
+      <View style={estilo.container}>
+        <View style={estilo.popUp}>
           <Text style={estilo.texto}>Tem certeza de apagar essa pesquisa?</Text>
-        </View>
-        <View style={estilo.botao}>
-          <TouchableOpacity style={estilo.botao1} onPress={goToHome}>
-            <Text style={estilo.textoBotao}>Sim</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={estilo.botao2}>
-            <Text style={estilo.textoBotao}>Cancelar</Text>
-          </TouchableOpacity>
+          <View style={estilo.botao}>
+            <TouchableOpacity style={estilo.botao1} onPress={onConfirm}>
+              <Text style={estilo.textoBotao}>Sim</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={estilo.botao2} onPress={onCancel}>
+              <Text style={estilo.textoBotao}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </Modal>
   );
 };
 
@@ -36,6 +29,7 @@ const estilo = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semitransparente
   },
 
   popUp: {
@@ -44,42 +38,43 @@ const estilo = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 200,
-    width: 450,
+    width: 350,
+    borderRadius: 10,
   },
 
   texto: {
     fontFamily: 'AveriaLibre-Regular',
-    fontSize: 30,
+    fontSize: 20,
     color: '#FFFFFF',
     textAlign: 'center',
-    marginBottom: 20, 
+    marginBottom: 20,
   },
 
   botao: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
     width: '100%',
-    paddingHorizontal: 20,
   },
 
   botao1: {
     backgroundColor: '#FF8383',
+    width: '45%',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    width: 175,
-    justifyContent: 'center',
+    borderRadius: 5,
   },
 
   botao2: {
     backgroundColor: '#3F92C5',
+    width: '45%',
     paddingVertical: 10,
     paddingHorizontal: 20,
-    width: 175,
+    borderRadius: 5,
   },
 
   textoBotao: {
     fontFamily: 'AveriaLibre-Regular',
-    fontSize: 32,
+    fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
   },

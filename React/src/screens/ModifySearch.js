@@ -9,21 +9,28 @@ import {
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
+import PopUp from './PopUp';
 
 const ModifySearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [data, setData] = useState('16/02/2024');
   const [image, setImage] = useState(require('../../assets/images/imagem.png')); // Imagem padrão
+  const [popUpVisible, setPopUpVisible] = useState(false);
 
   const goToHome = () =>{
     navigation.navigate('DrawerNavigator'); //Home está contida no Drawer
+    setPopUpVisible(false);
   };
 
-  const goToPopUp = () =>{
-    navigation.navigate('PopUp');
+  const showPopUp = () => { //mostrar pop up
+    setPopUpVisible(true);
+  };
 
+  const goToAcoesPesquisa = () => { //ir para açoes pesquisa caso clique em cancelar no pop up
+    navigation.navigate('AcoesPesquisa')
+    setPopUpVisible(false);
   }
-
+  
   return (
     <View style={estilo.tela}>
       <View style={estilo.cabecalho}>
@@ -68,10 +75,11 @@ const ModifySearch = ({ navigation }) => {
             <Text style={estilo.txtBotao}>SALVAR</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={estilo.botaoApagar} onPress={goToPopUp}>
+          <TouchableOpacity style={estilo.botaoApagar} onPress={showPopUp}>
             <MaterialIcons name="delete" size={24} color="#FFFFFF" />
             <Text style={estilo.txtApagar}>Apagar</Text>
           </TouchableOpacity>
+          <PopUp visible={popUpVisible} onConfirm={goToHome} onCancel={goToAcoesPesquisa} />
         </View>
       </View>
     </View>
