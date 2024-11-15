@@ -3,7 +3,8 @@ import {Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 const styles = StyleSheet.create({
   main: {
     backgroundColor: '#37BD6D',
-    padding: 10,
+    padding: 7,
+    elevation: 10
   },
   texto: {
     fontFamily: 'AveriaLibre-Regular',

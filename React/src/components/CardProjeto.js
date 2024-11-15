@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 
 const styles = StyleSheet.create({
   main: {
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#fff',
     width: 180,
-    aspectRatio: 1,
-    marginRight: 15,
-    padding: 15,
-    borderRadius: 15,
+    height: 150,
+    marginRight: 35,
+    padding: 7,
+    borderRadius: 10,
   },
 
   text: {
@@ -25,27 +25,27 @@ const CardProjeto = props => {
     '/750';
 
   return (
-    <View style={styles.main}>
+    <TouchableOpacity style={styles.main} onPress={props.onPress}>
       {/* Imagem */}
-      <View style={{flex: 1}}>
+     
         <Image
           style={{flex: 1}}
           source={{uri: imgAleatoria}}
-          resizeMode="center"
+          resizeMode='cover'
         />
-      </View>
+     
 
       {/* Nome */}
       <View>
-        <Text style={[styles.text, {fontSize: 24, color: '#3F92C5'}]}>
+        <Text style={[styles.text, {fontSize: 20, color: '#3F92C5'}]}>
           {props.titulo}
         </Text>
       </View>
       {/* Data */}
       <View>
-        <Text style={[styles.text, {fontSize: 14}]}>{props.data}</Text>
+        <Text style={[styles.text, {fontSize: 13}]}>{props.data}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

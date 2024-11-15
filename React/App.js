@@ -42,7 +42,7 @@ const App = () => {
           <Stack.Screen name="ModificarPesquisa" component={ModificarPesquisa} options={{headerShown: false}}/>
           <Stack.Screen name="Coleta" component={Coleta} options={{headerShown: false}}/>
           <Stack.Screen name="Agradecimento" component={Agradecimento} options={{headerShown: false}}/>
-          <Stack.Screen name="Tela_Relatorio" component={Tela_Relatorio} options={{headerShown: false}}/>
+          <Stack.Screen name="Tela_Relatorio" component={Tela_Relatorio}/>
           <Stack.Screen name="PopUp" component={PopUp} options={{headerShown: false}}/>
 
         </Stack.Navigator>

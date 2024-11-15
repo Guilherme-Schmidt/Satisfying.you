@@ -5,28 +5,16 @@ import {PieChart} from 'react-native-chart-kit';
 import {Dimensions} from 'react-native';
 
 const styles = StyleSheet.create({
-  cabecalho: {
-    backgroundColor: '#2B1D62',
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 10,
-  },
-  texto: {
-    marginLeft: 5,
-    fontSize: 25,
-    fontFamily: 'AveriaLibre-Regular',
-    color: '#FFFFFF',
-  },
-  container: {
+
+  main: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'column',
+    backgroundColor: '#372775',
+    justifyContent:'center',
+    alignItems: 'center'
   },
-  titulo: {
-    fontSize: 24,
-    fontFamily: 'AveriaLibre-Regular',
-    padding: 20,
-    color: '#FFFFFF',
-  },
+  
+ 
 });
 
 const Tela_Relatorio = () => {
@@ -67,18 +55,9 @@ const Tela_Relatorio = () => {
 
   return (
     <View style={styles.main}>
-      {/* Cabeçalho */}
-      <View style={styles.cabecalho}>
-        <Icon source="arrow-left" color="#573FBA" size={30} />
-        <Text style={styles.texto}>Relatório</Text>
-      </View>
+      
       {/* Conteúdo */}
-      <View>
-        {/* Titulo */}
-        <View style={styles.container}>
-          <Text style={styles.titulo}>Ubuntu 2022</Text>
-        </View>
-
+    
         {/* Grafico de Pizza */}
         <View>
           <PieChart
@@ -97,7 +76,7 @@ const Tela_Relatorio = () => {
         {/* informações */}
         <View></View>
       </View>
-    </View>
+    
   );
 };
 
