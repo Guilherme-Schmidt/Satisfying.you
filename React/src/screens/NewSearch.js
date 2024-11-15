@@ -13,6 +13,11 @@ const NewSearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [data, setData] = useState('');
   const [image, setImage] = useState(null);
+  
+  const goToHome = () =>{
+    navigation.navigate('Tela_Home');
+  };
+
 
   return (
     <View style={estilo.tela}>
@@ -53,7 +58,7 @@ const NewSearch = ({ navigation }) => {
         </View>
 
         <View style={estilo.botoesContainer}>
-          <TouchableOpacity style={estilo.botaoCadastrar}>
+          <TouchableOpacity style={estilo.botaoCadastrar} onPress={goToHome}>
             <Text style={estilo.txtBotao}>CADASTRAR</Text>
           </TouchableOpacity>
         </View>

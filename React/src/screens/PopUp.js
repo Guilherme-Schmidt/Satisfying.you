@@ -1,7 +1,17 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
+import Tela_Home from './Tela_Home';
+
+
 
 const PopUp = () => {
+  const navigation = useNavigation(); 
+
+  const goToHome = () =>{
+    navigation.navigate('Tela_Home');
+  };
+
   return (
     <View style={estilo.container}>
       <View style={estilo.popUp}>
@@ -9,7 +19,7 @@ const PopUp = () => {
           <Text style={estilo.texto}>Tem certeza de apagar essa pesquisa?</Text>
         </View>
         <View style={estilo.botao}>
-          <TouchableOpacity style={estilo.botao1}>
+          <TouchableOpacity style={estilo.botao1} onPress={goToHome}>
             <Text style={estilo.textoBotao}>Sim</Text>
           </TouchableOpacity>
           <TouchableOpacity style={estilo.botao2}>

@@ -15,7 +15,14 @@ const ModifySearch = ({ navigation }) => {
   const [data, setData] = useState('16/02/2024');
   const [image, setImage] = useState(require('../../assets/images/imagem.png')); // Imagem padrão
 
+  const goToHome = () =>{
+    navigation.navigate('Tela_Home');
+  };
 
+  const goToPopUp = () =>{
+    navigation.navigate('PopUp');
+
+  }
 
   return (
     <View style={estilo.tela}>
@@ -57,11 +64,11 @@ const ModifySearch = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={estilo.botoesContainer}>
-          <TouchableOpacity style={estilo.botaoSalvar}>
+          <TouchableOpacity style={estilo.botaoSalvar} onPress={goToHome}>
             <Text style={estilo.txtBotao}>SALVAR</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={estilo.botaoApagar}>
+          <TouchableOpacity style={estilo.botaoApagar} onPress={goToPopUp}>
             <MaterialIcons name="delete" size={24} color="#FFFFFF" />
             <Text style={estilo.txtApagar}>Apagar</Text>
           </TouchableOpacity>

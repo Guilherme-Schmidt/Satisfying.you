@@ -13,12 +13,11 @@ const AcoesPesquisa = (props) => {
   };
 
   const goToRelatorio = () => {
-    props.navigation.navigate('Relatorio'); //verificar nome da tela e componente em Stack.Screen
+    props.navigation.navigate('Tela_Relatorio'); // Dentro de um componente no DrawerNavigator
   };
 
   return (
     <View style={estilos.tela}>
-      
         <TouchableOpacity style={estilos.iconContainer} onPress={goToModificarPesquisa}>
           <Icon name="edit-note" size={80} color="#FFFFFF" />
           <Text style={estilos.txtIcon}>Modificar</Text>

@@ -25,9 +25,17 @@ const Login = ({  }) => {
     }
   };
 
+  const goToHome = () =>{
+    navigation.navigate('Tela_Home');
+  };
+
   const goToNovaConta = () =>{
-    navigation.navigate('NovaConta')
-  }
+    navigation.navigate('NovaConta');
+  };
+
+  const goToRecuperarSenha = () =>{
+    navigation.navigate('RecuperarSenha');
+  };
 
   return (
     <View style={estilos.tela}>
@@ -62,19 +70,20 @@ const Login = ({  }) => {
         </View>
 
         <TouchableOpacity
-          style={estilos.botaoFundo}
+          style={estilos.botaoFundo} onPress={goToHome}
         >
           <Text style={estilos.txtBotao}>ENTRAR</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[estilos.botaoCriarFundo, { marginTop: 10 }]}
+          // eslint-disable-next-line react-native/no-inline-styles
+          style={[estilos.botaoCriarFundo, { marginTop: 30 }]}
           onPress={goToNovaConta}
         >
           <Text style={estilos.botaoCriarText}>Criar minha conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={estilos.botaoSenha}>
+        <TouchableOpacity style={estilos.botaoSenha} onPress={goToRecuperarSenha}>
           <Text style={estilos.botaoCriarText}>Esqueci minha senha</Text>
         </TouchableOpacity>
       </View>
@@ -91,8 +100,7 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  header: {
-    
+  header: { 
     flexDirection: 'row', // Coloca o ícone e o texto lado a lado
     alignItems: 'center', // Alinha o ícone e o texto verticalmente
     justifyContent: 'center', // Centraliza o conteúdo horizontalmente
