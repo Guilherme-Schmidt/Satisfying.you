@@ -26,7 +26,7 @@ const Login = ({  }) => {
   };
 
   const goToHome = () =>{
-    navigation.navigate('Tela_Home');
+    navigation.navigate('DrawerNavigator'); //Home está contida no drawer
   };
 
   const goToNovaConta = () =>{

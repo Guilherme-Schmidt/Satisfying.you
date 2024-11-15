@@ -1,10 +1,16 @@
 import React from 'react';
-import { View, Text,TouchableOpacity, StyleSheet } from 'react-native';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import Tela_Home from './Tela_Home';
 
 const Drawer = createDrawerNavigator();
+
 function CustomDrawerContent(props) {
   const navigation = useNavigation();
   return (
@@ -16,13 +22,12 @@ function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
 
       <View style={styles.footer}>
-      <TouchableOpacity
+        <TouchableOpacity
           style={styles.botaoSair}
           onPress={() => {
             navigation.popToTop();
-          }}
-        >
-              <Icon name="sign-out" size={36} color={'#fff'} marginRight= {5} />
+          }}>
+          <Icon name="sign-out" size={30} color={'#fff'} marginRight={5} />
           <Text style={styles.txtBotaoSair}>Sair</Text>
         </TouchableOpacity>
       </View>
@@ -30,38 +35,23 @@ function CustomDrawerContent(props) {
   );
 }
 
-function Home() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-
 const DrawerNavigator = () => {
   return (
-      <Drawer.Navigator 
-        initialRouteName="Home" 
-        drawerContent={props => <CustomDrawerContent {...props} />}
-        screenOptions={styles.drawerScreenOptions}
-      >
-        <Drawer.Screen 
-          name="Home" 
-          component={Home} 
-          options={{
-            drawerLabel: () => (
-              <Text style={styles.drawerLabel}>
-                Pesquisas
-              </Text>
-            ),
-            drawerIcon: () => (
-              <Icon name="file-text" size={30} color={'#fff'} />
-            ),
-          }}
-        />
-      </Drawer.Navigator>
+    <Drawer.Navigator
+      initialRouteName="Tela_Home"
+      drawerContent={props => <CustomDrawerContent {...props} />}
+      screenOptions={styles.drawerScreenOptions}>
+      <Drawer.Screen
+        name="Tela_Home"
+        component={Tela_Home}
+        options={{
+          drawerLabel: () => <Text style={styles.drawerLabel}>Pesquisas</Text>,
+          drawerIcon: () => <Icon name="file-text" size={30} color={'#fff'} />,
+        }}
+      />
+    </Drawer.Navigator>
   );
-}
+};
 
 const styles = StyleSheet.create({
   header: {
@@ -96,20 +86,23 @@ const styles = StyleSheet.create({
       backgroundColor: '#2B1F5C',
     },
 
+    headerStyle: {
+      backgroundColor: '#2B1D62', // Cor do header desta tela  ;
+
+    },
+    headerTintColor: '#FFFFFF', // Cor do texto no header desta tela
+    headerTitle: '',
+  
     drawerItemStyle: {
       borderWidth: 0,
-      backgroundColor: 'transparent',
-    },
+      backgroundColor: '#2B1F5C'
 
-    activeBackgroundColor: 'transparent',
-    inactiveBackgroundColor: 'transparent',
+    },
   },
 
   footer: {
-    height: 900,
-    padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    marginTop: '33%',
+    marginLeft: '4%',
   },
 
   botaoSair: {
@@ -121,7 +114,7 @@ const styles = StyleSheet.create({
   },
 
   txtBotaoSair: {
-    fontSize: 26,
+    fontSize: 30,
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'AveriaLibre-Regular',

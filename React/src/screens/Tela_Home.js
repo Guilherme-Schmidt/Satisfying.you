@@ -8,11 +8,7 @@ import BarraDePesquisa from '../components/BarraDePesquisa';
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
-  cabecalho: {
-    backgroundColor: '#2B1D62',
-    flexDirection: 'row',
-    padding: 10,
-  },
+ 
   main: {
     flex: 1,
     padding: 25,
@@ -36,10 +32,7 @@ const Tela_Home = props => {
 
   return (
     <View style={{ flex: 1 }}>
-      <TouchableOpacity style={styles.cabecalho} onPress={goToDrawer}>
-        <Icon name="menu" size={35} color="#FFF"/>
-      </TouchableOpacity>
-
+     
       <View style={styles.main}>
         {/* Barra de pesquisa */}
         <View style={{ flex: 1 }}>

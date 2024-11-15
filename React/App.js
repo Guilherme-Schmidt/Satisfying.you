@@ -36,7 +36,6 @@ const App = () => {
           <Stack.Screen name="Login" component={Login}  options={{headerShown: false}} />
           <Stack.Screen name="NovaConta" component={NovaConta}  />
           <Stack.Screen name="RecuperarSenha" component={RecuperarSenha}  />
-          <Stack.Screen name="Tela_Home" component={Tela_Home}  options={{headerShown: false}} />
           <Stack.Screen name="NewSearch" component={NewSearch}  options={{headerShown: false}} />
           <Stack.Screen name="DrawerNavigator" component={DrawerNavigator}  options={{headerShown: false}} />
           <Stack.Screen name="AcoesPesquisa" component={AcoesPesquisa} />
