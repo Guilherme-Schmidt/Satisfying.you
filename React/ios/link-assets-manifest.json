@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/AveriaLibre-Bold.ttf",
+      "sha1": "0ce880962aec19fc6fbbec5d9d037fa8d7ad121c"
+    },
+    {
+      "path": "assets/fonts/AveriaLibre-BoldItalic.ttf",
+      "sha1": "9129f46f4f028770a68450a907019838906b6c8f"
+    },
+    {
+      "path": "assets/fonts/AveriaLibre-Italic.ttf",
+      "sha1": "68211bad5a7e65bcf245cbc4d54ec87cecb47b52"
+    },
+    {
+      "path": "assets/fonts/AveriaLibre-Light.ttf",
+      "sha1": "69de66b6fa8a46b8047aa7a09462c0873018f360"
+    },
+    {
+      "path": "assets/fonts/AveriaLibre-LightItalic.ttf",
+      "sha1": "fe4da9a9ab4b46708e3a5449fe17bfe89b745b4f"
+    },
+    {
+      "path": "assets/fonts/AveriaLibre-Regular.ttf",
+      "sha1": "7c2790a81e8c245f2bb9ba14f2e50f984b28f73a"
+    }
+  ]
+}
