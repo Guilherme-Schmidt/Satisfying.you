@@ -16,7 +16,7 @@ const ModifySearch = ({ navigation }) => {
   const [image, setImage] = useState(require('../../assets/images/imagem.png')); // Imagem padrão
 
   const goToHome = () =>{
-    navigation.navigate('Tela_Home');
+    navigation.navigate('DrawerNavigator'); //Home está contida no Drawer
   };
 
   const goToPopUp = () =>{

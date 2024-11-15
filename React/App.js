@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack'; // Ou qualquer o
 import Login from './src/screens/Login'; // Ajuste o caminho conforme necessário
 import NovaConta from './src/screens/NovaConta'; 
 import RecuperarSenha from './src/screens/RecuperarSenha';
-import Tela_Home from './src/screens/Tela_Home';
 import NewSearch from './src/screens/NewSearch';
 import Icon from 'react-native-vector-icons/MaterialIcons'; // Certifique-se de que a importação está correta
 import DrawerNavigator from './src/screens/DrawerNavigator';
