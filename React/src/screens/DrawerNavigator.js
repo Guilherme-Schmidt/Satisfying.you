@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
 
     headerStyle: {
-      backgroundColor: '#2B1D62', // Cor do header desta tela  ;
+      backgroundColor: '#2B1D62', // Cor do header desta tela 
 
     },
     headerTintColor: '#FFFFFF', // Cor do texto no header desta tela

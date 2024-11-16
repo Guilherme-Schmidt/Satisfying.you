@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
+import { useNavigation } from '@react-navigation/native'; 
 
 const Login = ({  }) => {
   const [email, setEmail] = useState('');

@@ -14,7 +14,7 @@ const RecuperarSenha = (props) => {
 
   const verificaEmail = (texto) => {
     setEmail(texto); //garante atualização do valor do email
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex para validar email
+    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
     if (texto === '' || emailRegex.test(texto)) {
       setErroEmail('');

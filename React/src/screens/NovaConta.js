@@ -12,14 +12,14 @@ const NovaConta = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaTemp, setSenhaTemp] = useState('');
-  const [erroSenha, setErroSenha] = useState(''); // Inicializa como null
-  const [erroEmail, setErroEmail] = useState(''); // Inicializa como null
+  const [erroSenha, setErroSenha] = useState(''); 
+  const [erroEmail, setErroEmail] = useState(''); 
   const navigation = useNavigation();
 
  
   const verificaEmail = (texto) => {
     setEmail(texto); //garante atualização do valor do email
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex para validar email
+    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
     if (texto === '' || emailRegex.test(texto)) {
       setErroEmail('');

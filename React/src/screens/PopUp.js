@@ -5,7 +5,7 @@ const PopUp = ({ visible, onConfirm, onCancel }) => {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="fade" // Animação para exibir o modal
+      animationType="fade" 
     >
       <View style={estilo.container}>
         <View style={estilo.popUp}>
