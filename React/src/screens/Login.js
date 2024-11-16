@@ -63,8 +63,6 @@ const Login = ({}) => {
             style={estilos.txtInput}
             value={password}
             onChangeText={setPassword}
-            placeholder="**********"
-            placeholderTextColor="#3F92C5"
             secureTextEntry
           />
           <Text style={estilos.txtErro}>{erroEmail}</Text>
