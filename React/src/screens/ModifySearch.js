@@ -18,7 +18,7 @@ const ModifySearch = ({ navigation }) => {
   const [popUpVisible, setPopUpVisible] = useState(false);
 
   const goToHome = () =>{
-    navigation.pop(2); //desimpilha 2 telas para voltar para home
+    navigation.pop(2); //desimpilha 2 telas para voltar para home(drawer)
     setPopUpVisible(false);
   };
 
@@ -27,7 +27,7 @@ const ModifySearch = ({ navigation }) => {
   };
 
   const goToAcoesPesquisa = () => { 
-    navigation.pop() // desimpilha 1 tela para voltar para açoes pesquisa caso clique em cancelar no pop up
+    navigation.goBack() // desimpilha esta tela para voltar para açoes pesquisa caso clique em cancelar no pop up
     setPopUpVisible(false);
   }
   

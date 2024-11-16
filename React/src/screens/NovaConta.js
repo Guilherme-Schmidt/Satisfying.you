@@ -45,7 +45,7 @@ const NovaConta = () => {
     }
     // Verificar se não há erros de e-mail e senha
     else if (erroEmail === '' && erroSenha === '') {
-      navigation.pop(); //exclui essa tela da pilha e volta para login
+      navigation.goBack(); //volta para login e desimpilha esta tela
     }
   };
 

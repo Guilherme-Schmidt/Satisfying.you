@@ -31,7 +31,7 @@ const RecuperarSenha = (props) => {
     }
     // Verificar se não há erro de e-mail
     if (erroEmail === '') {
-      props.navigation.pop(); //exclui essa tela de pilha e volta para login
+      props.navigation.goBack(); //volta para login e desimpilha esta tela
     }
   };
  

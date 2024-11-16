@@ -26,7 +26,7 @@ const NewSearch = ({ navigation }) => {
       setErroNome('')
     }
   }
-  
+
   const verificaData = (texto) => {
     setData(texto);
     if (texto === '') {
@@ -43,7 +43,7 @@ const NewSearch = ({ navigation }) => {
       return;
     }
     else if (Erronome === '' && Errodata === '') {
-      navigation.pop(); //Voltar para Home(Drawer)
+      navigation.goBack(); //Volta para Home(Drawer) e desimpilha esta tela
     }
   }
 

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
 
-const FaceButton = ({ nomeIcone, corIcone, textoIcone, onPress }) => {
+const FaceButton = ({ nomeIcone, corIcone, textoIcone}) => {
   const navigation = useNavigation();
 
   const goToAgradecimento = () =>{
@@ -37,7 +37,7 @@ const Coleta = () => {
 
       {/* Botão de Voltar */}
       <TouchableOpacity style={styles.voltarButton} onPress={() => navigation.goBack()}>
-        <Icon name="arrow-back" size={30} color="#fff" />
+        <Icon name="arrow-back" size={45} color="#372775" />
       </TouchableOpacity>
     </View>
   );
@@ -80,9 +80,8 @@ const styles = StyleSheet.create({
   },
   voltarButton: {
     position: 'absolute',
-    top: 30,
-    right: 20,
-    backgroundColor: 'transparent',
+    top: 3,
+    right: 10,
     padding: 10,
     borderRadius: 30,
     zIndex: 1, // Garante que o botão fique sobre os outros elementos
