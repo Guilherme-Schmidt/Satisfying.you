@@ -13,7 +13,7 @@ import PopUp from './PopUp';
 
 const ModifySearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
-  const [data, setData] = useState('16/02/2024');
+  const [data, setData] = useState('');
   const [image, setImage] = useState(require('../../assets/images/imagem.png')); // Imagem padrão
   const [popUpVisible, setPopUpVisible] = useState(false);
 
@@ -40,8 +40,6 @@ const ModifySearch = ({ navigation }) => {
           style={estilo.txtEntrada}
           value={nome}
           onChangeText={setNome}
-          placeholder="Carnaval 2024"
-          placeholderTextColor="#3F92C5"
         />
         <Text style={estilo.txtCorpo}>Data</Text>
         <View style={estilo.dateContainer}>

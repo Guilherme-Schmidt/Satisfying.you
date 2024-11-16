@@ -40,7 +40,7 @@ const NewSearch = ({ navigation }) => {
   const validarNovaPesquisa = () => {
     if (nome === '' || data === '') {
       alert('Todos os campos devem ser preenchidos.');
-      return;
+      return; //encerra função
     }
     else if (Erronome === '' && Errodata === '') {
       navigation.goBack(); //Volta para Home(Drawer) e desimpilha esta tela
