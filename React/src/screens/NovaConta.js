@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const NovaConta = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaTemp, setSenhaTemp] = useState('');
-  const [erroSenha, setErroSenha] = useState(false);
-  const [erroEmail, setErroEmail] = useState(false);
+  const [erroSenha, setErroSenha] = useState(''); // Inicializa como null
+  const [erroEmail, setErroEmail] = useState(''); // Inicializa como null
   const navigation = useNavigation();
-  const [image, setImage] = useState(); // Imagem padrão
 
+  // Função para verificar se as senhas são diferentes
   const difSenha = () => {
     if (senha !== senhaTemp) {
       setErroSenha(true);
@@ -19,38 +25,45 @@ const NovaConta = () => {
     }
   };
 
-  const emailPadrao = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Validação do e-mail
+  const verificaEmail = (texto) => {
+    setEmail(texto); //garante atualização do valor do email
+    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex para validar email
 
-  const validarEmail = (email) => {
-    setErroEmail(!emailPadrao.test(email));
-    setEmail(email);
+    if (texto === '' || emailRegex.test(texto)) {
+      setErroEmail('');
+    } else {
+      setErroEmail('Formato de e-mail inválido');
+    }
+  };
+
+  const verificaSenha = (texto) => {
+    setSenhaTemp(texto)
+    if (texto === '' || texto === senha) {
+      setErroSenha('');
+    } else {
+      setErroSenha('O campo repetir senha difere da senha');
+    }
   };
 
   const validarCadastro = () => {
-    validarEmail(email);
-    difSenha();
+    if (erroEmail === '' && erroSenha === '') { //verifica se não há erros de email e senha para fazer a navegação para tela de login
+      navigation.pop();
+    }
   };
 
   return (
     <View style={estilo.tela}>
-
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>E-mail</Text>
         <TextInput
           style={estilo.txtEntrada}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={verificaEmail}
           keyboardType="email-address"
         />
-        <Text
-          style={[
-            estilo.erro,
-            { color: erroEmail ? '#FD7979' : '#372775' },
-          ]}
-        >
-          Formato de e-mail inválido
-        </Text>
-
+        <Text style={{color:'#FD7979'}}>{erroEmail}</Text>
+         
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
           style={[estilo.txtEntrada, estilo.espacamentoSenha]}
@@ -63,24 +76,16 @@ const NovaConta = () => {
         <TextInput
           style={estilo.txtEntrada}
           value={senhaTemp}
-          onChangeText={setSenhaTemp}
+          onChangeText={verificaSenha}
           secureTextEntry={true}
         />
-        <Text
-          style={[
-            estilo.erro,
-            { color: erroSenha ? '#FD7979' : '#372775' },
-          ]}
-        >
-          O campo repetir senha difere da senha
-        </Text>
+        <Text style={{color:'#FD7979' }}>{erroSenha}</Text>
+          
       </View>
 
-      
-        <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
-          <Text style={estilo.txtBotao}>CADASTRAR</Text>
-        </TouchableOpacity>
-     
+      <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
+        <Text style={estilo.txtBotao}>CADASTRAR</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -91,21 +96,19 @@ const estilo = StyleSheet.create({
     backgroundColor: '#372775',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   corpo: {
-  flexDirection: 'column',
-  justifyContent: 'center',
-  width: '70%',
-
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '70%',
   },
 
   txtCorpo: {
     fontSize: 15,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
-  
   },
 
   txtEntrada: {
@@ -131,9 +134,9 @@ const estilo = StyleSheet.create({
     width: '70%',
     padding: 5,
     marginTop: 5,
-    elevation: 10
+    elevation: 10,
   },
-  
+
   txtBotao: {
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',

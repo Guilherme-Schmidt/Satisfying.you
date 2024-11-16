@@ -15,7 +15,7 @@ const NewSearch = ({ navigation }) => {
   const [image, setImage] = useState(null);
   
   const goToHome = () =>{
-    navigation.navigate('DrawerNavigator'); ////Home está contida no Drawer
+    navigation.pop(); //Voltar para Home(Drawer)
   };
 
 

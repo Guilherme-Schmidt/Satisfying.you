@@ -18,7 +18,7 @@ const ModifySearch = ({ navigation }) => {
   const [popUpVisible, setPopUpVisible] = useState(false);
 
   const goToHome = () =>{
-    navigation.navigate('DrawerNavigator'); //Home está contida no Drawer
+    navigation.pop(2); //desimpilha 2 telas para voltar para home
     setPopUpVisible(false);
   };
 
@@ -26,8 +26,8 @@ const ModifySearch = ({ navigation }) => {
     setPopUpVisible(true);
   };
 
-  const goToAcoesPesquisa = () => { //ir para açoes pesquisa caso clique em cancelar no pop up
-    navigation.navigate('AcoesPesquisa')
+  const goToAcoesPesquisa = () => { 
+    navigation.pop() // desimpilha 1 tela para voltar para açoes pesquisa caso clique em cancelar no pop up
     setPopUpVisible(false);
   }
   
