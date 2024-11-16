@@ -62,7 +62,7 @@ const NovaConta = () => {
           onChangeText={verificaEmail}
           keyboardType="email-address"
         />
-        <Text style={{ color: '#FD7979' }}>{erroEmail}</Text>
+        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular'}}>{erroEmail}</Text>
 
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
@@ -79,7 +79,7 @@ const NovaConta = () => {
           onChangeText={verificaSenha}
           secureTextEntry={true}
         />
-        <Text style={{ color: '#FD7979' }}>{erroSenha}</Text>
+        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular'}}>{erroSenha}</Text>
 
       </View>
 
