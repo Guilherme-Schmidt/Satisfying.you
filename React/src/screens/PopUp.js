@@ -39,7 +39,6 @@ const estilo = StyleSheet.create({
     justifyContent: 'center',
     height: 200,
     width: 350,
-    borderRadius: 10,
   },
 
   texto: {
