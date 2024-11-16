@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
 
   footer: {
-    marginTop: '33%',
+    marginTop: '45%',
     marginLeft: '4%',
   },
 
