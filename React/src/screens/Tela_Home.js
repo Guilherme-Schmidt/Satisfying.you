@@ -40,8 +40,9 @@ const Tela_Home = () => {
     navigation.navigate('NewSearch');
   };
 
-  const goToAcoesPesquisa = () => {
-    navigation.navigate('AcoesPesquisa'); // Navega para a tela AcoesPesquisa
+  //recebe titulo como argumento e passá-lo ao navegar
+  const goToAcoesPesquisa = (txtTitulo) => {
+    navigation.navigate('AcoesPesquisa', {titulo: txtTitulo}); // Navega para a tela AcoesPesquisa e passa o objeto titulo como um parâmetro, para o titulo do header mudar  de acordo com a pesquisa pressionada
   };
 
   return (
@@ -64,22 +65,22 @@ const Tela_Home = () => {
           <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
-            onPress={goToAcoesPesquisa}
+            onPress={() => goToAcoesPesquisa("MENINAS CPU")}
           />
           <CardProjeto
-            titulo="MENINAS CPU"
+            titulo="SECOMP"
             data="12/12/2023"
-            onPress={goToAcoesPesquisa}
+            onPress={() => goToAcoesPesquisa("SECOMP")}
           />
           <CardProjeto
-            titulo="MENINAS CPU"
+            titulo="UBUNTU"
             data="12/12/2023"
-            onPress={goToAcoesPesquisa}
+            onPress={() => goToAcoesPesquisa("UBUNTU")}
           />
           <CardProjeto
-            titulo="MENINAS CPU"
+            titulo="TESTE"
             data="12/12/2023"
-            onPress={goToAcoesPesquisa}
+            onPress={() => goToAcoesPesquisa("TESTE")}
           />
         </ScrollView>
 

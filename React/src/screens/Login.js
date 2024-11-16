@@ -153,7 +153,6 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#49B976',
-    marginBottom: 10,
     elevation: 10
   },
   txtErro: {

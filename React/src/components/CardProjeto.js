@@ -34,7 +34,7 @@ const CardProjeto = props => {
           resizeMode='cover'
         />
     
-      {/* Nome */}
+      {/* Titulo */}
       <View>
         <Text style={[styles.text, {fontSize: 20, color: '#3F92C5'}]}>
           {props.titulo}

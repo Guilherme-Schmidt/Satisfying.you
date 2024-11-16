@@ -38,7 +38,7 @@ const App = () => {
         <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} options={{ headerTitle: 'Recuperar senha' }} />
         <Stack.Screen name="NewSearch" component={NewSearch} options={{ headerShown: false, headerTitle: 'Nova pesquisa' }} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="AcoesPesquisa" component={AcoesPesquisa} options={{ headerTitle: 'Ações pesquisa' }} />
+        <Stack.Screen name="AcoesPesquisa" component={AcoesPesquisa}  />
         <Stack.Screen name="ModificarPesquisa" component={ModificarPesquisa} options={{ headerShown: false, headerTitle: 'Modificar pesquisa' }} />
         <Stack.Screen name="Coleta" component={Coleta} />
         <Stack.Screen name="Agradecimento" component={Agradecimento} options={{ headerShown: false }} />
