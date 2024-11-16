@@ -49,12 +49,6 @@ const NewSearch = ({ navigation }) => {
 
   return (
     <View style={estilo.tela}>
-      <View style={estilo.cabecalho}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#7A4BCE" />
-        </TouchableOpacity>
-        <Text style={estilo.txtcabecalho}>Nova Pesquisa</Text>
-      </View>
 
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>Nome</Text>
@@ -62,8 +56,6 @@ const NewSearch = ({ navigation }) => {
           style={estilo.txtEntrada}
           value={nome}
           onChangeText={verificaNome}
-          placeholder=""
-          placeholderTextColor="#fff"
         />
         <Text style={estilo.errorText}>{Erronome}</Text>
 
@@ -100,20 +92,9 @@ const estilo = StyleSheet.create({
     flex: 1,
     backgroundColor: '#372775',
     alignItems: 'center',
+    justifyContent: 'center'
   },
-  cabecalho: {
-    backgroundColor: '#2B1D62',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    width: '100%',
-  },
-  txtcabecalho: {
-    color: '#FFFFFF',
-    fontFamily: 'AveriaLibre-Bold',
-    fontSize: 24,
-    marginLeft: 10,
-  },
+ 
   corpo: {
     paddingHorizontal: 20,
     paddingTop: 10,
@@ -185,6 +166,7 @@ const estilo = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginRight: 10,
+    elevation: 10
   },
   txtBotao: {
     fontSize: 18,

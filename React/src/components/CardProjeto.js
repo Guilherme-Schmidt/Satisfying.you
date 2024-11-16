@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     height: 180,
     marginRight: 35,
     padding: 7,
-    borderRadius: 10,
+    borderRadius: 5,
   },
 
   text: {

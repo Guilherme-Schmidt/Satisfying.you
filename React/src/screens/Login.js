@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,13 +7,14 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native'; 
+import {useNavigation} from '@react-navigation/native';
 
-const Login = ({  }) => {
+const Login = ({}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erroEmail, setErroEmail] = useState('');
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
+
   const verificaEmail = texto => {
     setEmail(texto);
     const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -25,15 +26,15 @@ const Login = ({  }) => {
     }
   };
 
-  const goToHome = () =>{
+  const goToHome = () => {
     navigation.navigate('DrawerNavigator'); //Home está contida no drawer
   };
 
-  const goToNovaConta = () =>{
+  const goToNovaConta = () => {
     navigation.navigate('NovaConta');
   };
 
-  const goToRecuperarSenha = () =>{
+  const goToRecuperarSenha = () => {
     navigation.navigate('RecuperarSenha');
   };
 
@@ -69,28 +70,25 @@ const Login = ({  }) => {
           <Text style={estilos.txtErro}>{erroEmail}</Text>
         </View>
 
-        <TouchableOpacity
-          style={estilos.botaoFundo} onPress={goToHome}
-        >
-          <Text style={estilos.txtBotao}>ENTRAR</Text>
+        <TouchableOpacity style={estilos.botaoFundo} onPress={goToHome}>
+          <Text style={estilos.txtBotao}>Entrar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          // eslint-disable-next-line react-native/no-inline-styles
-          style={[estilos.botaoCriarFundo, { marginTop: 30 }]}
-          onPress={goToNovaConta}
-        >
-          <Text style={estilos.botaoCriarText}>Criar minha conta</Text>
+          style={[estilos.botaoCriarFundo, {marginTop: 30}]}
+          onPress={goToNovaConta}>
+          <Text style={estilos.txtBotao}>Criar minha conta</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={estilos.botaoSenha} onPress={goToRecuperarSenha}>
-          <Text style={estilos.botaoCriarText}>Esqueci minha senha</Text>
+        <TouchableOpacity
+          style={estilos.botaoSenha}
+          onPress={goToRecuperarSenha}>
+          <Text style={estilos.txtBotao}>Esqueci minha senha</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
-
 
 const estilos = StyleSheet.create({
   tela: {
@@ -100,7 +98,7 @@ const estilos = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  header: { 
+  header: {
     flexDirection: 'row', // Coloca o ícone e o texto lado a lado
     alignItems: 'center', // Alinha o ícone e o texto verticalmente
     justifyContent: 'center', // Centraliza o conteúdo horizontalmente
@@ -117,7 +115,7 @@ const estilos = StyleSheet.create({
   icon: {
     marginLeft: 10, // Espaço entre o texto e o ícone
     marginTop: 3,
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
 
   cPrincipal: {
@@ -153,7 +151,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#49B976',
-    elevation: 10
+    elevation: 10,
   },
   txtErro: {
     color: '#FD7979',
@@ -163,7 +161,7 @@ const estilos = StyleSheet.create({
   },
   txtBotao: {
     fontFamily: 'AveriaLibre-Regular',
-    fontSize: 14,
+    fontSize: 20,
     color: '#FFFFFF',
   },
 
@@ -174,13 +172,7 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#419ED7',
     marginBottom: 4,
-    elevation: 10
-  },
-
-  botaoCriarText: {
-    fontFamily: 'AveriaLibre-Regular',
-    fontSize: 14,
-    color: '#FFFFFF',
+    elevation: 10,
   },
 
   botaoSenha: {
@@ -189,7 +181,7 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#B5C7D1',
-    elevation: 10
+    elevation: 10,
   },
 });
 

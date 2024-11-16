@@ -12,14 +12,14 @@ const NovaConta = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [senhaTemp, setSenhaTemp] = useState('');
-  const [erroSenha, setErroSenha] = useState(''); 
-  const [erroEmail, setErroEmail] = useState(''); 
+  const [erroSenha, setErroSenha] = useState('');
+  const [erroEmail, setErroEmail] = useState('');
   const navigation = useNavigation();
 
- 
+
   const verificaEmail = (texto) => {
     setEmail(texto); //garante atualização do valor do email
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (texto === '' || emailRegex.test(texto)) {
       setErroEmail('');
@@ -54,6 +54,7 @@ const NovaConta = () => {
 
   return (
     <View style={estilo.tela}>
+
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>E-mail</Text>
         <TextInput
@@ -62,7 +63,7 @@ const NovaConta = () => {
           onChangeText={verificaEmail}
           keyboardType="email-address"
         />
-        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular'}}>{erroEmail}</Text>
+        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular' }}>{erroEmail}</Text>
 
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
@@ -79,13 +80,14 @@ const NovaConta = () => {
           onChangeText={verificaSenha}
           secureTextEntry={true}
         />
-        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular'}}>{erroSenha}</Text>
+        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular' }}>{erroSenha}</Text>
 
       </View>
 
       <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
         <Text style={estilo.txtBotao}>CADASTRAR</Text>
       </TouchableOpacity>
+
     </View>
   );
 };

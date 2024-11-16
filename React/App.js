@@ -36,10 +36,10 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="NovaConta" component={NovaConta}  options={{ headerTitle: 'Nova Conta' }} />
         <Stack.Screen name="RecuperarSenha" component={RecuperarSenha} options={{ headerTitle: 'Recuperação de senha' }} />
-        <Stack.Screen name="NewSearch" component={NewSearch} options={{ headerShown: false, headerTitle: 'Nova pesquisa' }} />
+        <Stack.Screen name="NewSearch" component={NewSearch} options={{ headerTitle: 'Nova pesquisa' }} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="AcoesPesquisa" component={AcoesPesquisa}  />
-        <Stack.Screen name="ModificarPesquisa" component={ModificarPesquisa} options={{ headerShown: false, headerTitle: 'Modificar pesquisa' }} />
+        <Stack.Screen name="ModificarPesquisa" component={ModificarPesquisa} options={{headerTitle: 'Modificar pesquisa'}} />
         <Stack.Screen name="Coleta" component={Coleta} options={{ headerShown: false}} />
         <Stack.Screen name="Agradecimento" component={Agradecimento} options={{ headerShown: false }} />
         <Stack.Screen name="Tela_Relatorio" component={Tela_Relatorio} options={{ headerTitle: 'Relatório' }} />

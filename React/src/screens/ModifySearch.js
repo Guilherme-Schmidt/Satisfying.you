@@ -33,13 +33,7 @@ const ModifySearch = ({ navigation }) => {
   
   return (
     <View style={estilo.tela}>
-      <View style={estilo.cabecalho}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color="#7A4BCE" />
-        </TouchableOpacity>
-        <Text style={estilo.txtCabecalho}>Modificar pesquisa</Text>
-      </View>
-
+      
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>Nome</Text>
         <TextInput
@@ -89,21 +83,9 @@ const ModifySearch = ({ navigation }) => {
 const estilo = StyleSheet.create({
   tela: {
     flex: 1,
+    justifyContent: 'center',
     backgroundColor: '#372775',
     alignItems: 'center',
-  },
-  cabecalho: {
-    backgroundColor: '#2B1D62',
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    width: '100%',
-  },
-  txtCabecalho: {
-    color: '#FFFFFF',
-    fontFamily: 'AveriaLibre-Bold',
-    fontSize: 24,
-    marginLeft: 10,
   },
   corpo: {
     paddingHorizontal: 20,
@@ -170,6 +152,7 @@ const estilo = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     marginRight: 10,
+    elevation: 10
   },
   txtBotao: {
     fontSize: 18,
