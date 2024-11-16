@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#fff',
     width: 180,
-    height: 150,
+    height: 180,
     marginRight: 35,
     padding: 7,
     borderRadius: 10,
@@ -43,7 +43,7 @@ const CardProjeto = props => {
       </View>
       {/* Data */}
       <View>
-        <Text style={[styles.text, {fontSize: 13}]}>{props.data}</Text>
+        <Text style={[styles.text, {fontSize: 13, color: '#8B8B8B'}]}>{props.data}</Text> 
       </View>
     </TouchableOpacity>
   );

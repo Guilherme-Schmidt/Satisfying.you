@@ -60,7 +60,7 @@ const Tela_Home = () => {
         </View>
 
         {/* Projetos de extensão */}
-        <ScrollView horizontal contentContainerStyle={{ alignItems: 'center', marginTop: 20, marginBottom: 25 }}>
+        <ScrollView horizontal contentContainerStyle={{ flexDirection: 'row', alignItems: 'center', marginTop: 20, marginBottom: 25}}>
           <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
