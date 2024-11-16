@@ -65,22 +65,22 @@ const Tela_Home = () => {
           <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("MENINAS CPU")}
+            onPress={() => goToAcoesPesquisa("Meninas CPU")}
           />
           <CardProjeto
             titulo="SECOMP"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("SECOMP")}
+            onPress={() => goToAcoesPesquisa("Secomp")}
           />
           <CardProjeto
             titulo="UBUNTU"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("UBUNTU")}
+            onPress={() => goToAcoesPesquisa("Ubuntu")}
           />
           <CardProjeto
             titulo="TESTE"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("TESTE")}
+            onPress={() => goToAcoesPesquisa("Teste")}
           />
         </ScrollView>
 
