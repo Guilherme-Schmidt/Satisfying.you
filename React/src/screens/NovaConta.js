@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,7 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const NovaConta = () => {
   const [email, setEmail] = useState('');
@@ -16,16 +16,7 @@ const NovaConta = () => {
   const [erroEmail, setErroEmail] = useState(''); // Inicializa como null
   const navigation = useNavigation();
 
-  // Função para verificar se as senhas são diferentes
-  const difSenha = () => {
-    if (senha !== senhaTemp) {
-      setErroSenha(true);
-    } else {
-      setErroSenha(false);
-    }
-  };
-
-  // Validação do e-mail
+ 
   const verificaEmail = (texto) => {
     setEmail(texto); //garante atualização do valor do email
     const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; //regex para validar email
@@ -47,10 +38,19 @@ const NovaConta = () => {
   };
 
   const validarCadastro = () => {
-    if (erroEmail === '' && erroSenha === '') { //verifica se não há erros de email e senha para fazer a navegação para tela de login
-      navigation.pop();
+    // Verificar se os campos estão preenchidos ()
+    if (email === '' || senha === '' || senhaTemp === '') {
+      alert('Todos os campos devem ser preenchidos.');
+      return; //encerra função
+    }
+    // Verificar se não há erros de e-mail e senha
+    else if (erroEmail === '' && erroSenha === '') {
+      navigation.pop(); //exclui essa tela da pilha e volta para login
     }
   };
+
+
+
 
   return (
     <View style={estilo.tela}>
@@ -62,8 +62,8 @@ const NovaConta = () => {
           onChangeText={verificaEmail}
           keyboardType="email-address"
         />
-        <Text style={{color:'#FD7979'}}>{erroEmail}</Text>
-         
+        <Text style={{ color: '#FD7979' }}>{erroEmail}</Text>
+
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
           style={[estilo.txtEntrada, estilo.espacamentoSenha]}
@@ -79,8 +79,8 @@ const NovaConta = () => {
           onChangeText={verificaSenha}
           secureTextEntry={true}
         />
-        <Text style={{color:'#FD7979' }}>{erroSenha}</Text>
-          
+        <Text style={{ color: '#FD7979' }}>{erroSenha}</Text>
+
       </View>
 
       <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
@@ -106,7 +106,7 @@ const estilo = StyleSheet.create({
   },
 
   txtCorpo: {
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
   },

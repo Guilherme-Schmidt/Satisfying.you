@@ -6,18 +6,46 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const NewSearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [data, setData] = useState('');
+  const [Erronome, setErroNome] = useState('');
+  const [Errodata, setErroData] = useState('');
   const [image, setImage] = useState(null);
-  
-  const goToHome = () =>{
-    navigation.pop(); //Voltar para Home(Drawer)
-  };
 
+
+  const verificaNome = (texto) => {
+    setNome(texto);
+    if (texto === '') {
+      setErroNome('Preencha o nome da pesquisa')
+    }
+    else {
+      setErroNome('')
+    }
+  }
+  
+  const verificaData = (texto) => {
+    setData(texto);
+    if (texto === '') {
+      setErroData('Preencha a data')
+    }
+    else {
+      setErroData('')
+    }
+  }
+
+  const validarNovaPesquisa = () => {
+    if (nome === '' || data === '') {
+      alert('Todos os campos devem ser preenchidos.');
+      return;
+    }
+    else if (Erronome === '' && Errodata === '') {
+      navigation.pop(); //Voltar para Home(Drawer)
+    }
+  }
 
   return (
     <View style={estilo.tela}>
@@ -33,24 +61,24 @@ const NewSearch = ({ navigation }) => {
         <TextInput
           style={estilo.txtEntrada}
           value={nome}
-          onChangeText={setNome}
+          onChangeText={verificaNome}
           placeholder=""
           placeholderTextColor="#fff"
         />
-        <Text style={estilo.errorText}>Preencha o nome da pesquisa</Text>
+        <Text style={estilo.errorText}>{Erronome}</Text>
 
         <Text style={estilo.txtCorpo}>Data</Text>
         <View style={estilo.dateContainer}>
           <TextInput
             style={estilo.txtEntradaData}
             value={data}
-            onChangeText={setData}
+            onChangeText={verificaData}
             placeholder=""
             placeholderTextColor="#3F92C5"
           />
           <MaterialIcons name="calendar-today" size={24} color="#3F92C5" style={estilo.iconeCalendario} />
         </View>
-        <Text style={estilo.errorText}>Preencha a data</Text>
+        <Text style={estilo.errorText}>{Errodata}</Text>
 
         <Text style={estilo.txtCorpo}>Imagem</Text>
         <View style={estilo.imageContainer}>
@@ -58,7 +86,7 @@ const NewSearch = ({ navigation }) => {
         </View>
 
         <View style={estilo.botoesContainer}>
-          <TouchableOpacity style={estilo.botaoCadastrar} onPress={goToHome}>
+          <TouchableOpacity style={estilo.botaoCadastrar} onPress={validarNovaPesquisa}>
             <Text style={estilo.txtBotao}>CADASTRAR</Text>
           </TouchableOpacity>
         </View>
@@ -102,7 +130,7 @@ const estilo = StyleSheet.create({
     color: '#FFFFFF',
     marginBottom: 0,
   },
-  
+
   txtEntrada: {
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',

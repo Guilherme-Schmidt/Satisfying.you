@@ -23,9 +23,18 @@ const RecuperarSenha = (props) => {
     }
   };
 
-  const goToLogin = () => {
-    props.navigation.pop();
-  }
+  const validarRecuperação = () => {
+    // Verificar se e-mail está preenchido
+    if (email === '') {
+      alert('É necessário informar um E-mail.');
+      return; //encerra função
+    }
+    // Verificar se não há erro de e-mail
+    if (erroEmail === '') {
+      props.navigation.pop(); //exclui essa tela de pilha e volta para login
+    }
+  };
+ 
 
   return (
     <View style={estilos.tela}>
@@ -40,7 +49,7 @@ const RecuperarSenha = (props) => {
             autoCapitalize="none"></TextInput>
           <Text style={estilos.txtErro}>{erroEmail}</Text>
         </View>
-        <TouchableOpacity style={estilos.botaoContainer} onPress={goToLogin}>
+        <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
           <Text style={estilos.txtBotao}>RECUPERAR</Text>
         </TouchableOpacity>
      

@@ -33,8 +33,7 @@ const CardProjeto = props => {
           source={{uri: imgAleatoria}}
           resizeMode='cover'
         />
-     
-
+    
       {/* Nome */}
       <View>
         <Text style={[styles.text, {fontSize: 20, color: '#3F92C5'}]}>

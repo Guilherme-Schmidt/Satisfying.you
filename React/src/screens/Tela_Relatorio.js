@@ -24,30 +24,35 @@ const Tela_Relatorio = () => {
       population: 15,
       color: '#F1CE7E',
       legendFontColor: '#FFFFFF',
+      legendFontSize: 16
     },
     {
       name: 'Bom',
       population: 7,
       color: '#5FCDA4',
       legendFontColor: '#FFFFFF',
+      legendFontSize: 16
     },
     {
       name: 'Neutro',
       population: 27,
       color: '#6994FE',
       legendFontColor: '#FFFFFF',
+      legendFontSize: 16
     },
     {
       name: 'Ruim',
       population: 5,
       color: '#EA7288',
       legendFontColor: '#FFFFFF',
+      legendFontSize: 16
     },
     {
       name: 'Péssimo',
       population: 2,
       color: 'red',
       legendFontColor: '#FFFFFF',
+      legendFontSize: 16
     },
   ];
 
@@ -63,7 +68,7 @@ const Tela_Relatorio = () => {
           <PieChart
             data={data}
             width={Dimensions.get('screen').width}
-            height={220}
+            height={270}
             chartConfig={{
               color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
             }}
@@ -72,9 +77,7 @@ const Tela_Relatorio = () => {
             avoidFalseZero={true}
           />
         </View>
-
-        {/* informações */}
-        <View></View>
+        
       </View>
     
   );

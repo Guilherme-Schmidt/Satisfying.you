@@ -41,7 +41,7 @@ const Login = ({  }) => {
     <View style={estilos.tela}>
       <View style={estilos.header}>
         <Text style={estilos.title}>Satisfying.you</Text>
-        <Icon name="sentiment-satisfied" size={30} style={estilos.icon} />
+        <Icon name="sentiment-satisfied" size={40} style={estilos.icon} />
       </View>
 
       <View style={estilos.cPrincipal}>
@@ -116,6 +116,8 @@ const estilos = StyleSheet.create({
 
   icon: {
     marginLeft: 10, // Espaço entre o texto e o ícone
+    marginTop: 3,
+    color: '#FFFFFF'
   },
 
   cPrincipal: {
@@ -152,6 +154,7 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#49B976',
     marginBottom: 10,
+    elevation: 10
   },
   txtErro: {
     color: '#FD7979',
@@ -172,6 +175,7 @@ const estilos = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#419ED7',
     marginBottom: 4,
+    elevation: 10
   },
 
   botaoCriarText: {
@@ -185,7 +189,8 @@ const estilos = StyleSheet.create({
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#B0CCDE',
+    backgroundColor: '#B5C7D1',
+    elevation: 10
   },
 });
 
