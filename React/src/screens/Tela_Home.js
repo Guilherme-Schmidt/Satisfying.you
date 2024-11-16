@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardProjeto from '../components/CardProjeto';
 import BotaoPesquisa from '../components/BotaoPesquisa';
@@ -14,24 +14,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#372775',
   },
   barraPesquisaContainer: {
-    position: 'absolute', // Fixa a posição no topo da tela
-    top: 20, // Ajusta a distância do topo da tela
-    left: 25, // Alinha à esquerda
-    right: 25, // Alinha à direita
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'white',
-    height: 40, 
     borderRadius: 5,
-    justifyContent: 'center',
-   
+    height: 40,
+    paddingHorizontal: 10,
   },
   icon: {
-    position: 'absolute',
-    left: 10,
-    top: 9,
+    marginRight: 10,
   },
   textInput: {
-    height: '100%',
-    paddingLeft: 40,
+    flex: 1, //ocupar todo o espaço restante da barra de pesquisa
     fontSize: 14,
     color: 'black',
     fontFamily: 'AveriaLibre-Regular',
@@ -40,6 +34,7 @@ const styles = StyleSheet.create({
 
 const Tela_Home = () => {
   const navigation = useNavigation();
+  const [textPesquisa, setTextoPesquisa] = useState('');
 
   const goToNovaPesquisa = () => {
     navigation.navigate('NewSearch');
@@ -49,10 +44,8 @@ const Tela_Home = () => {
     navigation.navigate('AcoesPesquisa'); // Navega para a tela AcoesPesquisa
   };
 
-  const [textPesquisa, setTextoPesquisa] = useState('');
-
   return (
-    <View style={{ flex: 1 }}>
+    
       <View style={styles.main}>
         {/* Barra de pesquisa */}
         <View style={styles.barraPesquisaContainer}>
@@ -67,7 +60,7 @@ const Tela_Home = () => {
         </View>
 
         {/* Projetos de extensão */}
-        <ScrollView horizontal contentContainerStyle={{ alignItems: 'center', marginTop: 60, marginBottom: 25}}>
+        <ScrollView horizontal contentContainerStyle={{ alignItems: 'center', marginTop: 20, marginBottom: 25 }}>
           <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
@@ -78,17 +71,16 @@ const Tela_Home = () => {
             data="12/12/2023"
             onPress={goToAcoesPesquisa}
           />
-           <CardProjeto
+          <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
             onPress={goToAcoesPesquisa}
           />
-           <CardProjeto
+          <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
             onPress={goToAcoesPesquisa}
           />
-        
         </ScrollView>
 
         {/* Nova Pesquisa */}
@@ -96,7 +88,7 @@ const Tela_Home = () => {
           <BotaoPesquisa texto="NOVA PESQUISA" onPress={goToNovaPesquisa} />
         </View>
       </View>
-    </View>
+    
   );
 };
 
