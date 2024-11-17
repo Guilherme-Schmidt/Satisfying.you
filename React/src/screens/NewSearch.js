@@ -102,8 +102,9 @@ const estilo = StyleSheet.create({
   },
   errorText: {
     color: '#ff4d4d',
-    fontSize: 12,
+    fontSize: 13,
     marginBottom: 1,
+    fontFamily: 'AveriaLibre-Regular'
   },
   txtCorpo: {
     fontSize: 16,

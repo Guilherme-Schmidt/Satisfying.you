@@ -12,8 +12,8 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import PopUp from './PopUp';
 
 const ModifySearch = ({ navigation }) => {
-  const [nome, setNome] = useState('');
-  const [data, setData] = useState('');
+  const [nome, setNome] = useState('Carnaval 2024');
+  const [data, setData] = useState('16/02/2024');
   const [image, setImage] = useState(require('../../assets/images/imagem.png')); // Imagem padrão
   const [popUpVisible, setPopUpVisible] = useState(false);
 
