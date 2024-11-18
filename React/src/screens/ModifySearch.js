@@ -9,7 +9,7 @@ import {
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { launchImageLibrary } from 'react-native-image-picker';
-import PopUp from './PopUp';
+import PopUp from '../components/PopUp';
 
 const ModifySearch = ({ navigation }) => {
   const [nome, setNome] = useState('Carnaval 2024');

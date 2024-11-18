@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
-import Tela_Home from './Tela_Home';
+import Tela_Home from '../screens/Tela_Home';
 
 const Drawer = createDrawerNavigator();
 
