@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { launchImageLibrary } from 'react-native-image-picker';
 import PopUp from '../components/PopUp';
 
 const ModifySearch = ({ navigation }) => {
@@ -30,10 +29,9 @@ const ModifySearch = ({ navigation }) => {
     navigation.goBack() // desimpilha esta tela para voltar para açoes pesquisa caso clique em cancelar no pop up
     setPopUpVisible(false);
   }
-  
+
   return (
     <View style={estilo.tela}>
-      
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>Nome</Text>
         <TextInput
@@ -52,7 +50,6 @@ const ModifySearch = ({ navigation }) => {
           />
           <MaterialIcons name="calendar-today" size={30} color="#3F92C5" style={estilo.iconeCalendario} />
         </View>
-        
         <Text style={estilo.txtCorpo}>Imagem</Text>
         <TouchableOpacity style={estilo.imageContainer}>
           <Image

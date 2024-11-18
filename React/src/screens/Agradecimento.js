@@ -5,11 +5,10 @@ import { useEffect } from 'react';
 const Agradecimento = () => {
     const navigation = useNavigation();
 
-    const sair = () => {
-        navigation.pop();
-    }
-
     useEffect(() => {
+        const sair = () => {
+            navigation.pop();
+        };
         const timer = setTimeout(sair, 3000); // Temporizador de 3 segundos
         return () => clearTimeout(timer); // Limpar o timer ao desmontar o componente
     }, [navigation]);
@@ -21,13 +20,13 @@ const Agradecimento = () => {
             </Text>
             <Text style={st.texto}>
                 Aguardamos você no próximo ano!
-            </Text>     
+            </Text>
         </View>
     );
 };
 
 const st = StyleSheet.create({
-     containerTexto: {
+    containerTexto: {
         display: 'flex',
         flex: 1,
         flexDirection: 'column',

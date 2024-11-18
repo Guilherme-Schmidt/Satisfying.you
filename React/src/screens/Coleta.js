@@ -9,7 +9,6 @@ const FaceButton = ({ nomeIcone, corIcone, textoIcone}) => {
   const goToAgradecimento = () =>{
     navigation.navigate('Agradecimento');
   }
-
   return (
     <TouchableOpacity onPress={goToAgradecimento} style={styles.faceButton}>
       <Icon name={nomeIcone} size={50} color={corIcone} />

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
-import { View, StyleSheet, ScrollView, TextInput, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, StyleSheet, ScrollView, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardProjeto from '../components/CardProjeto';
 import BotaoPesquisa from '../components/BotaoPesquisa';
@@ -46,7 +46,6 @@ const Tela_Home = () => {
   };
 
   return (
-    
       <View style={styles.main}>
         {/* Barra de pesquisa */}
         <View style={styles.barraPesquisaContainer}>
@@ -82,6 +81,11 @@ const Tela_Home = () => {
             data="12/12/2023"
             onPress={() => goToAcoesPesquisa("Teste")}
           />
+          <CardProjeto
+            titulo="TESTE"
+            data="12/12/2023"
+            onPress={() => goToAcoesPesquisa("Teste")}
+          />
         </ScrollView>
 
         {/* Nova Pesquisa */}
@@ -89,7 +93,6 @@ const Tela_Home = () => {
           <BotaoPesquisa texto="NOVA PESQUISA" onPress={goToNovaPesquisa} />
         </View>
       </View>
-    
   );
 };
 
