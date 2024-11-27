@@ -91,14 +91,14 @@ const estilo = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
-    marginBottom: 0,
+    marginBottom: 1,
   },
   txtEntrada: {
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
-    padding: 10,
+    padding: 5,
     marginBottom: 10,
     width: '100%',
   },
@@ -107,8 +107,7 @@ const estilo = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
-    padding: 10,
-    paddingRight: 40, // Espaço para o ícone do calendário
+    padding: 5,
     flex: 1,
   },
   dateContainer: {
@@ -123,30 +122,30 @@ const estilo = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: '#FFFFFF',
-    height: 60,
+    height: 78,
     width: '30%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
     overflow: 'hidden',
   },
   image: {
-    height: 40,
-    width: 40,
+    height: 70,
+    width: 70,
   },
   botoesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 4,
+    marginTop: 0,
+    marginBottom: 11
   },
   botaoSalvar: {
+    flex: 1,
     backgroundColor: '#37BD6D',
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 1,
-    marginRight: 10,
     elevation: 10
   },
   txtBotao: {
@@ -156,8 +155,8 @@ const estilo = StyleSheet.create({
   },
   botaoApagar: {
     alignItems: 'center',
-    bottom: 0,
-    right:-90
+    bottom: 2,
+    right:-85
   },
   txtApagar: {
     color: '#FFFFFF',

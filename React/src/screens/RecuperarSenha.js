@@ -86,6 +86,7 @@ const estilos = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
+    marginBottom: 3
   },
 
   txtInput: {
@@ -93,6 +94,7 @@ const estilos = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     color: '#3F92C5',
+    padding: 5
   },
 
   txtBotao: {

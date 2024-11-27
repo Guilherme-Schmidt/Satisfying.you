@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   main: {
     backgroundColor: '#37BD6D',
     padding: 7,
-    elevation: 10
+    elevation: 10,
+    marginTop: 2
   },
   texto: {
     fontFamily: 'AveriaLibre-Regular',

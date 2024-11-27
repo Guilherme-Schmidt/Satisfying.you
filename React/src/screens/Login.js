@@ -73,7 +73,7 @@ const Login = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[estilos.botaoCriarFundo, {marginTop: 30}]}
+          style={[estilos.botaoCriarFundo, {marginTop: 15}]}
           onPress={goToNovaConta}>
           <Text style={estilos.txtBotao}>Criar minha conta</Text>
         </TouchableOpacity>
@@ -100,7 +100,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row', // Coloca o ícone e o texto lado a lado
     alignItems: 'center', // Alinha o ícone e o texto verticalmente
     justifyContent: 'center', // Centraliza o conteúdo horizontalmente
-    marginBottom: 15,
+    marginTop: 2
   },
 
   title: {
@@ -144,18 +144,20 @@ const estilos = StyleSheet.create({
   },
 
   botaoFundo: {
-    height: 35,
+    height: 33,
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#49B976',
     elevation: 10,
+    marginTop: -5,
   },
   txtErro: {
     color: '#FD7979',
     marginTop: '2%',
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
+    marginBottom: 3
   },
   txtBotao: {
     fontFamily: 'AveriaLibre-Regular',
@@ -164,7 +166,7 @@ const estilos = StyleSheet.create({
   },
 
   botaoCriarFundo: {
-    height: 35,
+    height: 33,
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -174,12 +176,14 @@ const estilos = StyleSheet.create({
   },
 
   botaoSenha: {
-    height: 35,
+    height: 33,
     width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#B5C7D1',
     elevation: 10,
+    marginTop: 3,
+    marginBottom: 10
   },
 });
 

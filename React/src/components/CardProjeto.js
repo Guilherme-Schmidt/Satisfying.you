@@ -5,10 +5,10 @@ const styles = StyleSheet.create({
   main: {
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#fff',
-    width: 180,
-    height: 180,
+    width: 170,
+    height: 165,
     marginRight: 35,
-    padding: 7,
+    padding: 3,
     borderRadius: 5,
   },
 

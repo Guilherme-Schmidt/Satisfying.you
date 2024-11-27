@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 2,
     backgroundColor: '#fff',
-    marginBottom: 30,
+    marginBottom: 20,
     width: '75%',
     alignSelf: 'center',
   },
@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
 
     headerStyle: {
       backgroundColor: '#2B1D62', // Cor do header desta tela 
-
     },
     headerTintColor: '#FFFFFF', // Cor do texto no header desta tela
     headerTitle: '',
@@ -96,13 +95,12 @@ const styles = StyleSheet.create({
     drawerItemStyle: {
       borderWidth: 0,
       backgroundColor: '#2B1F5C'
-
     },
   },
 
   footer: {
-    marginTop: '45%',
-    marginLeft: '4%',
+    marginTop: '38%',
+    marginLeft: '5%',
   },
 
   botaoSair: {

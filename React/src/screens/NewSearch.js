@@ -97,7 +97,7 @@ const estilo = StyleSheet.create({
  
   corpo: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    marginTop: 4,
     width: '70%',
   },
   errorText: {
@@ -110,7 +110,6 @@ const estilo = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
-    marginBottom: 0,
   },
 
   txtEntrada: {
@@ -118,8 +117,8 @@ const estilo = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
-    padding: 5,
-    marginBottom: 5,
+    padding: 3,
+    marginBottom: 2,
     width: '100%',
   },
   txtEntradaData: {
@@ -127,7 +126,7 @@ const estilo = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
-    padding: 5,
+    padding: 3,
     paddingRight: 40, // Espaço para o ícone do calendário
     flex: 1,
   },
@@ -135,7 +134,7 @@ const estilo = StyleSheet.create({
     position: 'relative',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 5,
+    marginBottom: 2,
   },
   iconeCalendario: {
     position: 'absolute',
@@ -143,7 +142,7 @@ const estilo = StyleSheet.create({
   },
   imageContainer: {
     backgroundColor: '#FFFFFF',
-    height: 60,
+    height: 70,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -158,16 +157,15 @@ const estilo = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 4,
   },
   botaoCadastrar: {
     backgroundColor: '#37BD6D',
-    padding: 5,
+    padding: 3,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
-    marginRight: 10,
-    elevation: 10
+    elevation: 10,
+    marginBottom: 7
   },
   txtBotao: {
     fontSize: 18,

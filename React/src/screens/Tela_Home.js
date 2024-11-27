@@ -10,7 +10,7 @@ import { useState } from 'react';
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    padding: 25,
+    padding: 10,
     backgroundColor: '#372775',
   },
   barraPesquisaContainer: {
@@ -20,9 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 40,
     paddingHorizontal: 10,
-  },
-  icon: {
-    marginRight: 10,
+    marginBottom: 10
   },
   textInput: {
     flex: 1, //ocupar todo o espaço restante da barra de pesquisa
@@ -49,7 +47,7 @@ const Tela_Home = () => {
       <View style={styles.main}>
         {/* Barra de pesquisa */}
         <View style={styles.barraPesquisaContainer}>
-          <Icon name="magnify" size={24} color="#888" style={styles.icon} />
+          <Icon name="magnify" size={24} color="#888" />
           <TextInput
             placeholder="Insira o termo de busca..."
             placeholderTextColor="black"

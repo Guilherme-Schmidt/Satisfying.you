@@ -63,7 +63,7 @@ const NovaConta = () => {
           onChangeText={verificaEmail}
           keyboardType="email-address"
         />
-        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular' }}>{erroEmail}</Text>
+        <Text style={estilo.txtErro}>{erroEmail}</Text>
 
         <Text style={estilo.txtCorpo}>Senha</Text>
         <TextInput
@@ -80,7 +80,7 @@ const NovaConta = () => {
           onChangeText={verificaSenha}
           secureTextEntry={true}
         />
-        <Text style={{ color: '#FD7979', fontFamily: 'AveriaLibre-Regular' }}>{erroSenha}</Text>
+        <Text style={estilo.txtErro}>{erroSenha}</Text>
 
       </View>
 
@@ -115,6 +115,7 @@ const estilo = StyleSheet.create({
 
   txtEntrada: {
     fontSize: 14,
+    padding: 5,
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
@@ -122,20 +123,21 @@ const estilo = StyleSheet.create({
   },
 
   espacamentoSenha: {
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
-  erro: {
-    fontSize: 15,
+  txtErro: {
+    color: '#FD7979', 
     fontFamily: 'AveriaLibre-Regular',
-    marginBottom: 4,
+    marginTop: 2,
+   
   },
 
   botao: {
     backgroundColor: '#37BD6D',
     width: '70%',
     padding: 5,
-    marginTop: 5,
+    marginTop: 10,
     elevation: 10,
   },
 
