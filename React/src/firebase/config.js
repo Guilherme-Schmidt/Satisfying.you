@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import {FIREBASE_API_KEY} from '@env';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA0u6fyNdbnebMOBScPIEZjaC7j2G2RcHE",
+  apiKey: FIREBASE_API_KEY,
   authDomain: "testemobile-cc6f2.firebaseapp.com",
   projectId: "testemobile-cc6f2",
   storageBucket: "testemobile-cc6f2.firebasestorage.app",
