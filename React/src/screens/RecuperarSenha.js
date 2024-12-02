@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -6,53 +6,52 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-
+import { auth_module } from '../firebase/config';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 const RecuperarSenha = (props) => {
+
   const [email, setEmail] = useState('');
   const [erroEmail, setErroEmail] = useState('');
 
-  const verificaEmail = (texto) => {
-    setEmail(texto); //garante atualização do valor do email
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-
-    if (texto === '' || emailRegex.test(texto)) {
-      setErroEmail('');
-    } else {
-      setErroEmail('E-mail parece ser inválido');
-    }
-  };
-
   const validarRecuperação = () => {
-    // Verificar se e-mail está preenchido
-    if (email === '') {
-      alert('É necessário informar um E-mail.');
-      return; //encerra função
-    }
-    // Verificar se não há erro de e-mail
-    if (erroEmail === '') {
-      props.navigation.goBack(); //volta para login e desimpilha esta tela
-    }
+
+    //Enviar e-mail de redefinição de senha
+    sendPasswordResetEmail(auth_module, email)
+      .then(() => {
+        props.navigation.goBack(); //volta para tela de login e desimpilha esta tela
+      })
+      .catch((error) => {
+        console.log("Falha ao enviar e-mail de redefinição de senha: " + JSON.stringify(error));
+        if (error.code == "auth/invalid-email") {
+          setErroEmail("E-mail inválido!");
+        }
+        else if (error.code == "auth/missing-email") {
+          setErroEmail("É necessário informar um E-mail");
+        }
+        else {
+          setErroEmail('Erro ao enviar e-mail de redefinição de senha.');
+        }
+      })
   };
- 
 
   return (
     <View style={estilos.tela}>
-     
-        <View style={estilos.inputContainer}>
-          <Text style={estilos.txtEmail}>E-mail</Text>
-          <TextInput
-            value={email}
-            onChangeText={verificaEmail} //chama a função verificaEmail ao digitar
-            style={estilos.txtInput}
-            keyboardType="email-address"
-            autoCapitalize="none"></TextInput>
-          <Text style={estilos.txtErro}>{erroEmail}</Text>
-        </View>
-        <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
-          <Text style={estilos.txtBotao}>RECUPERAR</Text>
-        </TouchableOpacity>
-     
+
+      <View style={estilos.inputContainer}>
+        <Text style={estilos.txtEmail}>E-mail</Text>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          style={estilos.txtInput}
+          keyboardType="email-address"
+          autoCapitalize="none"></TextInput>
+        <Text style={estilos.txtErro}>{erroEmail}</Text>
+      </View>
+      <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
+        <Text style={estilos.txtBotao}>RECUPERAR</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };

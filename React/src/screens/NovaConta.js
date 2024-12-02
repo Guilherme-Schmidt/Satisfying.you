@@ -7,6 +7,8 @@ import {
   TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth_module } from '../firebase/config';
 
 const NovaConta = () => {
   const [email, setEmail] = useState('');
@@ -17,23 +19,12 @@ const NovaConta = () => {
   const navigation = useNavigation();
 
 
-  const verificaEmail = (texto) => {
-    setEmail(texto); //garante atualização do valor do email
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (texto === '' || emailRegex.test(texto)) {
-      setErroEmail('');
-    } else {
-      setErroEmail('Formato de e-mail inválido');
-    }
-  };
-
   const verificaSenha = (texto) => {
     setSenhaTemp(texto)
     if (texto === '' || texto === senha) {
       setErroSenha('');
     } else {
-      setErroSenha('O campo repetir senha difere da senha');
+      setErroSenha("O campo repetir senha difere da senha");
     }
   };
 
@@ -43,10 +34,39 @@ const NovaConta = () => {
       alert('Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
-    // Verificar se não há erros de e-mail e senha
-    else if (erroEmail === '' && erroSenha === '') {
-      navigation.goBack(); //volta para login e desimpilha esta tela
+    // Verificar se as senhas coincidem
+    if (senha !== senhaTemp) {
+      setErroSenha('O campo repetir senha difere da senha');
+      setErroEmail(''); //limpa erro de email
+      return;
     }
+    else {
+      setErroSenha('');
+    }
+
+    //realizar cadastro no Firebase
+    createUserWithEmailAndPassword(auth_module, email, senha)
+      .then((UserCredential) => {
+        console.log("Usuário criado com sucesso: " + JSON.stringify(UserCredential));
+        navigation.goBack(); //volta para login e desimpilha esta tela
+      })
+      .catch((error) => {
+        console.log("erro: " + JSON.stringify(error));
+        if (error.code == "auth/invalid-email") {
+          setErroEmail("E-mail inválido")
+        }
+        else if (error.code == "auth/email-already-in-use") {
+          setErroEmail("Já existe um usuário cadastrado com esse e-mail!");
+        }
+        else if (error.code == "auth/weak-password") {
+          setErroSenha("A senha deve conter no mínimo 6 caracteres!")
+          setErroEmail("");//limpar erro de email
+        }
+        else {
+          alert('Erro ao criar conta.');
+        }
+      })
+
   };
 
 
@@ -60,7 +80,7 @@ const NovaConta = () => {
         <TextInput
           style={estilo.txtEntrada}
           value={email}
-          onChangeText={verificaEmail}
+          onChangeText={setEmail}
           keyboardType="email-address"
         />
         <Text style={estilo.txtErro}>{erroEmail}</Text>
@@ -127,10 +147,10 @@ const estilo = StyleSheet.create({
   },
 
   txtErro: {
-    color: '#FD7979', 
+    color: '#FD7979',
     fontFamily: 'AveriaLibre-Regular',
     marginTop: 2,
-   
+
   },
 
   botao: {

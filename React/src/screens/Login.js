@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,27 +7,51 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth_module } from '../firebase/config';
 
-const Login = ({}) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erroEmail, setErroEmail] = useState('');
   const navigation = useNavigation();
 
-  const verificaEmail = texto => {
+  const verificaEmail = (texto) => {
     setEmail(texto);
     const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (texto === '' || emailRegex.test(texto)) {
       setErroEmail('');
     } else {
-      setErroEmail('E-mail e/ou senha inválidos');
+      setErroEmail('E-mail inválido');
     }
   };
 
   const goToHome = () => {
-    navigation.navigate('DrawerNavigator'); //Home está contida no drawer
+    //autenticar usuário no Firebase
+    signInWithEmailAndPassword(auth_module, email, password)
+      .then(() => {
+        //limpar erro email
+        setErroEmail('');
+        //navegar para home
+        navigation.navigate('DrawerNavigator'); //Home está contida no drawer
+      })
+      .catch((error) => {
+        console.log("Falha ao autenticar usuário: " + JSON.stringify(error));
+        if (error.code == "auth/invalid-credential") {
+          setErroEmail('E-mail e/ou senha inválidos');
+        }
+        else if (error.code == "auth/too-many-requests") {
+          setErroEmail("Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.");
+        }
+        else if (error.code == "auth/missing-password") {
+          setErroEmail("É necessário informar a senha.");
+        }
+        else {
+          setErroEmail("Erro ao fazer login.");
+        }
+      })
   };
 
   const goToNovaConta = () => {
@@ -73,7 +97,7 @@ const Login = ({}) => {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={[estilos.botaoCriarFundo, {marginTop: 15}]}
+          style={[estilos.botaoCriarFundo, { marginTop: 15 }]}
           onPress={goToNovaConta}>
           <Text style={estilos.txtBotao}>Criar minha conta</Text>
         </TouchableOpacity>
