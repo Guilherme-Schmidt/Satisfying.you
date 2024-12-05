@@ -3,31 +3,67 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
-  Image,
   TextInput,
+  Image
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
-
+import { launchImageLibrary } from 'react-native-image-picker';
+import ImageResizer from 'react-native-image-resizer';
 
 const NewSearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
   const [data, setData] = useState('');
   const [Erronome, setErroNome] = useState('');
   const [Errodata, setErroData] = useState('');
-  const [image, setImage] = useState(null);
+  const [imagem, setImagem] = useState();
 
- 
+  //Redimensionamento do tamanho da imagem e conversão para base 64
+  const converteUriToBase64 = async (uri) => {
+
+    const resizedImage = await ImageResizer.createResizedImage(
+      uri, // URI da imagem original
+      200,  // Largura
+      200,  // Altura
+      'JPEG', // Formato (JPEG ou PNG)
+      100  // Qualidade (0-100)
+    );
+
+    const imageUri = await fetch(resizedImage.uri);
+    const imageBlob = await imageUri.blob();
+    console.log(imageBlob);
+
+    const reader = new FileReader();
+
+    //Quando a leitura estiver completa, atribui o resultado a setImagem
+    reader.onloadend = () => {
+      setImagem(reader.result);
+    };
+    reader.readAsDataURL(imageBlob); //Converte Blob para Base64
+  };
+
+  //escolher imagem na galeria
+  const pickImage = () => {
+    launchImageLibrary({ mediaType: 'photo' }, (result) => {
+      
+      //Verificar se uma imagem foi selecionada
+      if (result.assets && result.assets.length > 0) {
+        console.log(result.assets[0].uri); //uri da imagem selecionada
+        converteUriToBase64(result.assets[0].uri); //converte a imagem selecionada para base64
+      }
+    })
+  }
+
   const addPesquisa = () => {
 
     const auth = getAuth();
     const userID = auth.currentUser.uid; //obtém o uid do usuário autenticado atual
     const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); //referência p/ subcoleção pesquisas do respectivo usuário autenticado (usando userID)
-  
-    if(!userID){
+
+    if (!userID) {
       alert('Usuário não autenticado');
       return;
     }
@@ -35,7 +71,7 @@ const NewSearch = ({ navigation }) => {
     const docPesquisa = {
       Nome: nome,
       data: data,
-      imagem: image || '', //tratar depois
+      imagem: imagem,
       excelente: 0,
       bom: 0,
       neutro: 0,
@@ -45,13 +81,13 @@ const NewSearch = ({ navigation }) => {
 
     addDoc(pesquisas_SubCollection, docPesquisa)
       .then((docRef) => {
-        console.log("Novo documento inserido com sucesso: " +docRef.id) //id do documento de pesquisa adicionado à subcoleção pesquisas
+        console.log("Novo documento inserido com sucesso: " + docRef.id) //id do documento de pesquisa adicionado à subcoleção pesquisas
       })
       .catch((error) => {
-        console.log("Erro: " +error)
+        console.log("Erro: " + error)
       })
   }
-  
+
   const verificaNome = (texto) => {
     setNome(texto);
     if (texto === '') {
@@ -73,7 +109,7 @@ const NewSearch = ({ navigation }) => {
   }
 
   const cadastrarPesquisa = () => {
-    if (nome === '' || data === '') {
+    if (nome === '' || data === '' || imagem === null) {
       alert('Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
@@ -110,9 +146,14 @@ const NewSearch = ({ navigation }) => {
         <Text style={estilo.errorText}>{Errodata}</Text>
 
         <Text style={estilo.txtCorpo}>Imagem</Text>
-        <View style={estilo.imageContainer}>
-          <Text style={estilo.imageText}>Câmera/Galeria de imagens</Text>
-        </View>
+        <TouchableOpacity style={estilo.imagemContainer} onPress={pickImage}>
+          {imagem ? (
+            <Image source={{ uri: imagem }} style={{ height: 100, width: 100, resizeMode: 'cover' }} />
+          ) : (
+            <Text style={estilo.imagemText}>Câmera/Galeria de imagens</Text>
+          )}
+
+        </TouchableOpacity>
 
         <View style={estilo.botoesContainer}>
           <TouchableOpacity style={estilo.botaoCadastrar} onPress={cadastrarPesquisa}>
@@ -131,7 +172,7 @@ const estilo = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
- 
+
   corpo: {
     paddingHorizontal: 20,
     marginTop: 4,
@@ -177,16 +218,16 @@ const estilo = StyleSheet.create({
     position: 'absolute',
     right: 10, // Alinha o ícone à direita dentro do TextInput
   },
-  imageContainer: {
+  imagemContainer: {
     backgroundColor: '#FFFFFF',
     height: 70,
-    width: '50%',
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
     overflow: 'hidden',
   },
-  imageText: {
+  imagemText: {
     color: '#999',
     fontSize: 14,
   },
