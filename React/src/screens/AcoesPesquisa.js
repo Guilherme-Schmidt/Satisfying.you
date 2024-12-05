@@ -7,7 +7,7 @@ const AcoesPesquisa = () => {
 
   const navigation = useNavigation(); //hook useNavigation
   const route = useRoute(); //hook useRoute()
-  const { titulo } = route.params || {} //desestruturação para acessar a propriedade titulo. route.params guarda os objetos passados durante a navegação
+  const { titulo } = route.params || {}; //desestruturação para acessar a propriedade titulo. route.params guarda os objetos passados durante a navegação
 
   // Define o título do header (atualiza o título antes que a tela seja exibida ao usuário)
   useLayoutEffect(() => {
@@ -74,7 +74,7 @@ const estilos = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     marginTop: 10,
-  }
+  },
 });
 
 export default AcoesPesquisa;

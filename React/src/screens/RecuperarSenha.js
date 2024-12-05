@@ -22,17 +22,17 @@ const RecuperarSenha = (props) => {
         props.navigation.goBack(); //volta para tela de login e desimpilha esta tela
       })
       .catch((error) => {
-        console.log("Falha ao enviar e-mail de redefinição de senha: " + JSON.stringify(error));
-        if (error.code == "auth/invalid-email") {
-          setErroEmail("E-mail inválido!");
+        console.log('Falha ao enviar e-mail de redefinição de senha: ' + JSON.stringify(error));
+        if (error.code === 'auth/invalid-email') {
+          setErroEmail('E-mail inválido!');
         }
-        else if (error.code == "auth/missing-email") {
-          setErroEmail("É necessário informar um E-mail");
+        else if (error.code === 'auth/missing-email') {
+          setErroEmail('É necessário informar um E-mail');
         }
         else {
           setErroEmail('Erro ao enviar e-mail de redefinição de senha.');
         }
-      })
+      });
   };
 
   return (
@@ -45,7 +45,7 @@ const RecuperarSenha = (props) => {
           onChangeText={setEmail}
           style={estilos.txtInput}
           keyboardType="email-address"
-          autoCapitalize="none"></TextInput>
+          autoCapitalize="none" />
         <Text style={estilos.txtErro}>{erroEmail}</Text>
       </View>
       <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
@@ -85,7 +85,7 @@ const estilos = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     color: '#FFFFFF',
-    marginBottom: 3
+    marginBottom: 3,
   },
 
   txtInput: {
@@ -93,7 +93,7 @@ const estilos = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     color: '#3F92C5',
-    padding: 5
+    padding: 5,
   },
 
   txtBotao: {

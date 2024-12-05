@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 40,
     paddingHorizontal: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   textInput: {
     flex: 1, //ocupar todo o espaço restante da barra de pesquisa
@@ -62,27 +62,27 @@ const Tela_Home = () => {
           <CardProjeto
             titulo="MENINAS CPU"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("Meninas CPU")}
+            onPress={() => goToAcoesPesquisa('Meninas CPU')}
           />
           <CardProjeto
             titulo="SECOMP"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("Secomp")}
+            onPress={() => goToAcoesPesquisa('Secomp')}
           />
           <CardProjeto
             titulo="UBUNTU"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("Ubuntu")}
+            onPress={() => goToAcoesPesquisa('Ubuntu')}
           />
           <CardProjeto
             titulo="TESTE"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("Teste")}
+            onPress={() => goToAcoesPesquisa('Teste')}
           />
           <CardProjeto
             titulo="TESTE"
             data="12/12/2023"
-            onPress={() => goToAcoesPesquisa("Teste")}
+            onPress={() => goToAcoesPesquisa('Teste')}
           />
         </ScrollView>
 

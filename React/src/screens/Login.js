@@ -38,20 +38,20 @@ const Login = () => {
         navigation.navigate('DrawerNavigator'); //Home está contida no drawer
       })
       .catch((error) => {
-        console.log("Falha ao autenticar usuário: " + JSON.stringify(error));
-        if (error.code === "auth/invalid-credential" || error.code === "auth/invalid-email") {
+        console.log('Falha ao autenticar usuário: ' + JSON.stringify(error));
+        if (error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-email') {
           setErroEmail('E-mail e/ou senha inválidos');
         }
-        else if (error.code === "auth/too-many-requests") {
-          setErroEmail("Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.");
+        else if (error.code === 'auth/too-many-requests') {
+          setErroEmail('Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.');
         }
-        else if (error.code === "auth/missing-password") {
-          setErroEmail("É necessário informar a senha.");
+        else if (error.code === 'auth/missing-password') {
+          setErroEmail('É necessário informar a senha.');
         }
         else {
-          setErroEmail("Erro ao fazer login.");
+          setErroEmail('Erro ao fazer login.');
         }
-      })
+      });
   };
 
   const goToNovaConta = () => {
@@ -124,7 +124,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row', // Coloca o ícone e o texto lado a lado
     alignItems: 'center', // Alinha o ícone e o texto verticalmente
     justifyContent: 'center', // Centraliza o conteúdo horizontalmente
-    marginTop: 2
+    marginTop: 2,
   },
 
   title: {
@@ -181,7 +181,7 @@ const estilos = StyleSheet.create({
     marginTop: '2%',
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
-    marginBottom: 3
+    marginBottom: 3,
   },
   txtBotao: {
     fontFamily: 'AveriaLibre-Regular',
@@ -207,7 +207,7 @@ const estilos = StyleSheet.create({
     backgroundColor: '#B5C7D1',
     elevation: 10,
     marginTop: 3,
-    marginBottom: 10
+    marginBottom: 10,
   },
 });
 

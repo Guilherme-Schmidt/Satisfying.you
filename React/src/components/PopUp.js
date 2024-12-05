@@ -5,7 +5,7 @@ const PopUp = ({ visible, onConfirm, onCancel }) => {
     <Modal
       visible={visible}
       transparent={true}
-      animationType="fade" 
+      animationType="fade"
     >
       <View style={estilo.container}>
         <View style={estilo.popUp}>
@@ -61,7 +61,7 @@ const estilo = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    elevation: 10
+    elevation: 10,
   },
 
   botao2: {
@@ -70,7 +70,7 @@ const estilo = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 5,
-    elevation: 10
+    elevation: 10,
   },
 
   textoBotao: {

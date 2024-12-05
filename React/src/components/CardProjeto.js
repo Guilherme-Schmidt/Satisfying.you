@@ -27,13 +27,13 @@ const CardProjeto = props => {
   return (
     <TouchableOpacity style={styles.main} onPress={props.onPress}>
       {/* Imagem */}
-     
+
         <Image
           style={{flex: 1}}
           source={{uri: imgAleatoria}}
-          resizeMode='cover'
+          resizeMode="cover"
         />
-    
+
       {/* Titulo */}
       <View>
         <Text style={[styles.text, {fontSize: 20, color: '#3F92C5'}]}>
@@ -42,7 +42,7 @@ const CardProjeto = props => {
       </View>
       {/* Data */}
       <View>
-        <Text style={[styles.text, {fontSize: 13, color: '#8B8B8B'}]}>{props.data}</Text> 
+        <Text style={[styles.text, {fontSize: 13, color: '#8B8B8B'}]}>{props.data}</Text>
       </View>
     </TouchableOpacity>
   );

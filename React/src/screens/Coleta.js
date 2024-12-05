@@ -8,7 +8,7 @@ const FaceButton = ({ nomeIcone, corIcone, textoIcone}) => {
 
   const goToAgradecimento = () =>{
     navigation.navigate('Agradecimento');
-  }
+  };
   return (
     <TouchableOpacity onPress={goToAgradecimento} style={styles.faceButton}>
       <Icon name={nomeIcone} size={50} color={corIcone} />
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   questionText: {
     fontSize: 30,
     color: 'white',
-    fontFamily: 'AveriaLibre-Bold', 
+    fontFamily: 'AveriaLibre-Bold',
     marginTop: 50,
     marginBottom: 60, // Dá uma margem para garantir que o título fique no topo
   },

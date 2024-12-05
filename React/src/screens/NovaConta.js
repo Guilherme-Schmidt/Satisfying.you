@@ -20,11 +20,11 @@ const NovaConta = () => {
 
 
   const verificaSenha = (texto) => {
-    setSenhaTemp(texto)
+    setSenhaTemp(texto);
     if (texto === '' || texto === senha) {
       setErroSenha('');
     } else {
-      setErroSenha("O campo repetir senha difere da senha");
+      setErroSenha('O campo repetir senha difere da senha');
     }
   };
 
@@ -47,25 +47,25 @@ const NovaConta = () => {
     //realizar cadastro no Firebase
     createUserWithEmailAndPassword(auth_module, email, senha)
       .then((UserCredential) => {
-        console.log("Usuário criado com sucesso: " + JSON.stringify(UserCredential));
+        console.log('Usuário criado com sucesso: ' + JSON.stringify(UserCredential));
         navigation.goBack(); //volta para login e desimpilha esta tela
       })
       .catch((error) => {
-        console.log("erro: " + JSON.stringify(error));
-        if (error.code === "auth/invalid-email") {
-          setErroEmail("E-mail inválido");
+        console.log('erro: ' + JSON.stringify(error));
+        if (error.code === 'auth/invalid-email') {
+          setErroEmail('E-mail inválido');
         }
-        else if (error.code === "auth/email-already-in-use") {
-          setErroEmail("Já existe um usuário cadastrado com esse e-mail!");
+        else if (error.code === 'auth/email-already-in-use') {
+          setErroEmail('Já existe um usuário cadastrado com esse e-mail!');
         }
-        else if (error.code === "auth/weak-password") {
-          setErroSenha("A senha deve conter no mínimo 6 caracteres!");
-          setErroEmail("");//limpar erro de email
+        else if (error.code === 'auth/weak-password') {
+          setErroSenha('A senha deve conter no mínimo 6 caracteres!');
+          setErroEmail('');//limpar erro de email
         }
         else {
           alert('Erro ao criar conta.');
         }
-      })
+      });
 
   };
 

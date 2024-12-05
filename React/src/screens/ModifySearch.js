@@ -25,10 +25,10 @@ const ModifySearch = ({ navigation }) => {
     setPopUpVisible(true);
   };
 
-  const goToAcoesPesquisa = () => { 
-    navigation.goBack() // desimpilha esta tela para voltar para açoes pesquisa caso clique em cancelar no pop up
+  const goToAcoesPesquisa = () => {
+    navigation.goBack(); // desimpilha esta tela para voltar para açoes pesquisa caso clique em cancelar no pop up
     setPopUpVisible(false);
-  }
+  };
 
   return (
     <View style={estilo.tela}>
@@ -138,7 +138,7 @@ const estilo = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 0,
-    marginBottom: 11
+    marginBottom: 11,
   },
   botaoSalvar: {
     flex: 1,
@@ -146,7 +146,7 @@ const estilo = StyleSheet.create({
     padding: 5,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 10
+    elevation: 10,
   },
   txtBotao: {
     fontSize: 18,
@@ -156,7 +156,7 @@ const estilo = StyleSheet.create({
   botaoApagar: {
     alignItems: 'center',
     bottom: 2,
-    right:-85
+    right:-85,
   },
   txtApagar: {
     color: '#FFFFFF',

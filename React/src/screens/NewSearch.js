@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Image
+  Image,
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -76,16 +76,16 @@ const NewSearch = ({ navigation }) => {
       neutro: 0,
       ruim: 0,
       pessimo: 0,
-    }
+    };
 
     addDoc(pesquisas_SubCollection, docPesquisa)
       .then((docRef) => {
-        console.log("Novo documento inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
+        console.log('Novo documento inserido com sucesso: ' + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
       })
       .catch((error) => {
-        console.log("Erro: " + error);
-      })
-  }
+        console.log('Erro: ' + error);
+      });
+  };
 
   const verificaNome = (texto) => {
     setNome(texto);
@@ -95,7 +95,7 @@ const NewSearch = ({ navigation }) => {
     else {
       setErroNome('');
     }
-  }
+  };
 
   const verificaData = (texto) => {
     setData(texto);
@@ -105,7 +105,7 @@ const NewSearch = ({ navigation }) => {
     else {
       setErroData('');
     }
-  }
+  };
 
   const cadastrarPesquisa = () => {
     if (nome === '' || data === '' || imagem === '') {
@@ -117,7 +117,7 @@ const NewSearch = ({ navigation }) => {
       addPesquisa();
       navigation.goBack(); //Volta para Home(Drawer) e desimpilha esta tela
     }
-  }
+  };
 
   return (
     <View style={estilo.tela}>
@@ -169,7 +169,7 @@ const estilo = StyleSheet.create({
     flex: 1,
     backgroundColor: '#372775',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 
   corpo: {
@@ -181,7 +181,7 @@ const estilo = StyleSheet.create({
     color: '#ff4d4d',
     fontSize: 13,
     marginBottom: 1,
-    fontFamily: 'AveriaLibre-Regular'
+    fontFamily: 'AveriaLibre-Regular',
   },
   txtCorpo: {
     fontSize: 16,
@@ -242,19 +242,19 @@ const estilo = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     elevation: 10,
-    marginBottom: 7
+    marginBottom: 7,
   },
   txtBotao: {
     fontSize: 18,
     fontFamily: 'AveriaLibre-Bold',
-    color: '#FFFFFF'
+    color: '#FFFFFF',
   },
 
   imagem: {
     height: 100,
     width: 100,
-    resizeMode: 'cover'
-  }
+    resizeMode: 'cover',
+  },
 });
 
 export default NewSearch;

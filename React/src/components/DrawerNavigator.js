@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
     },
 
     headerStyle: {
-      backgroundColor: '#2B1D62', // Cor do header desta tela 
+      backgroundColor: '#2B1D62', // Cor do header desta tela
     },
     headerTintColor: '#FFFFFF', // Cor do texto no header desta tela
     headerTitle: '',
-  
+
     drawerItemStyle: {
       borderWidth: 0,
-      backgroundColor: '#2B1F5C'
+      backgroundColor: '#2B1F5C',
     },
   },
 
