@@ -19,7 +19,7 @@ const NewSearch = ({ navigation }) => {
   const [data, setData] = useState('');
   const [Erronome, setErroNome] = useState('');
   const [Errodata, setErroData] = useState('');
-  const [imagem, setImagem] = useState();
+  const [imagem, setImagem] = useState('');//será uma string em base64
 
   //Redimensionamento do tamanho da imagem e conversão para base 64
   const converteUriToBase64 = async (uri) => {
@@ -109,7 +109,7 @@ const NewSearch = ({ navigation }) => {
   }
 
   const cadastrarPesquisa = () => {
-    if (nome === '' || data === '' || imagem === null) {
+    if (nome === '' || data === '' || imagem === '') {
       alert('Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
