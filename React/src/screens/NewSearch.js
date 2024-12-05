@@ -8,6 +8,10 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { getAuth } from 'firebase/auth';
+import { db } from '../firebase/config';
+import { collection, addDoc } from 'firebase/firestore';
+
 
 const NewSearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
@@ -16,7 +20,38 @@ const NewSearch = ({ navigation }) => {
   const [Errodata, setErroData] = useState('');
   const [image, setImage] = useState(null);
 
+ 
+  const addPesquisa = () => {
 
+    const auth = getAuth();
+    const userID = auth.currentUser.uid; //obtém o uid do usuário autenticado atual
+    const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); //referência p/ subcoleção pesquisas do respectivo usuário autenticado (usando userID)
+  
+    if(!userID){
+      alert('Usuário não autenticado');
+      return;
+    }
+
+    const docPesquisa = {
+      Nome: nome,
+      data: data,
+      imagem: image || '', //tratar depois
+      excelente: 0,
+      bom: 0,
+      neutro: 0,
+      ruim: 0,
+      pessimo: 0,
+    }
+
+    addDoc(pesquisas_SubCollection, docPesquisa)
+      .then((docRef) => {
+        console.log("Novo documento inserido com sucesso: " +docRef.id) //id do documento de pesquisa adicionado à subcoleção pesquisas
+      })
+      .catch((error) => {
+        console.log("Erro: " +error)
+      })
+  }
+  
   const verificaNome = (texto) => {
     setNome(texto);
     if (texto === '') {
@@ -37,12 +72,14 @@ const NewSearch = ({ navigation }) => {
     }
   }
 
-  const validarNovaPesquisa = () => {
+  const cadastrarPesquisa = () => {
     if (nome === '' || data === '') {
       alert('Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
     else if (Erronome === '' && Errodata === '') {
+      //cadastrar no firestore
+      addPesquisa();
       navigation.goBack(); //Volta para Home(Drawer) e desimpilha esta tela
     }
   }
@@ -78,7 +115,7 @@ const NewSearch = ({ navigation }) => {
         </View>
 
         <View style={estilo.botoesContainer}>
-          <TouchableOpacity style={estilo.botaoCadastrar} onPress={validarNovaPesquisa}>
+          <TouchableOpacity style={estilo.botaoCadastrar} onPress={cadastrarPesquisa}>
             <Text style={estilo.txtBotao}>CADASTRAR</Text>
           </TouchableOpacity>
         </View>

@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 import {FIREBASE_API_KEY} from '@env';
 
 const firebaseConfig = {
@@ -13,7 +14,7 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const auth_module = getAuth(app);
+const db = getFirestore(app);
 
-export {auth_module}
+export {app, auth_module, db}

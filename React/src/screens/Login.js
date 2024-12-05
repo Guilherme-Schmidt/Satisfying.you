@@ -39,7 +39,7 @@ const Login = () => {
       })
       .catch((error) => {
         console.log("Falha ao autenticar usuário: " + JSON.stringify(error));
-        if (error.code == "auth/invalid-credential") {
+        if (error.code == "auth/invalid-credential" || error.code == "auth/invalid-email") {
           setErroEmail('E-mail e/ou senha inválidos');
         }
         else if (error.code == "auth/too-many-requests") {
