@@ -52,14 +52,14 @@ const NovaConta = () => {
       })
       .catch((error) => {
         console.log("erro: " + JSON.stringify(error));
-        if (error.code == "auth/invalid-email") {
-          setErroEmail("E-mail inválido")
+        if (error.code === "auth/invalid-email") {
+          setErroEmail("E-mail inválido");
         }
-        else if (error.code == "auth/email-already-in-use") {
+        else if (error.code === "auth/email-already-in-use") {
           setErroEmail("Já existe um usuário cadastrado com esse e-mail!");
         }
-        else if (error.code == "auth/weak-password") {
-          setErroSenha("A senha deve conter no mínimo 6 caracteres!")
+        else if (error.code === "auth/weak-password") {
+          setErroSenha("A senha deve conter no mínimo 6 caracteres!");
           setErroEmail("");//limpar erro de email
         }
         else {

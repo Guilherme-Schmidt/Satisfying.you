@@ -39,13 +39,13 @@ const Login = () => {
       })
       .catch((error) => {
         console.log("Falha ao autenticar usuário: " + JSON.stringify(error));
-        if (error.code == "auth/invalid-credential" || error.code == "auth/invalid-email") {
+        if (error.code === "auth/invalid-credential" || error.code === "auth/invalid-email") {
           setErroEmail('E-mail e/ou senha inválidos');
         }
-        else if (error.code == "auth/too-many-requests") {
+        else if (error.code === "auth/too-many-requests") {
           setErroEmail("Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.");
         }
-        else if (error.code == "auth/missing-password") {
+        else if (error.code === "auth/missing-password") {
           setErroEmail("É necessário informar a senha.");
         }
         else {

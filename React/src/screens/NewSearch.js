@@ -48,14 +48,13 @@ const NewSearch = ({ navigation }) => {
   //escolher imagem na galeria
   const pickImage = () => {
     launchImageLibrary({ mediaType: 'photo' }, (result) => {
-      
       //Verificar se uma imagem foi selecionada
       if (result.assets && result.assets.length > 0) {
         console.log(result.assets[0].uri); //uri da imagem selecionada
         converteUriToBase64(result.assets[0].uri); //converte a imagem selecionada para base64
       }
-    })
-  }
+    });
+  };
 
   const addPesquisa = () => {
 
@@ -81,30 +80,30 @@ const NewSearch = ({ navigation }) => {
 
     addDoc(pesquisas_SubCollection, docPesquisa)
       .then((docRef) => {
-        console.log("Novo documento inserido com sucesso: " + docRef.id) //id do documento de pesquisa adicionado à subcoleção pesquisas
+        console.log("Novo documento inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
       })
       .catch((error) => {
-        console.log("Erro: " + error)
+        console.log("Erro: " + error);
       })
   }
 
   const verificaNome = (texto) => {
     setNome(texto);
     if (texto === '') {
-      setErroNome('Preencha o nome da pesquisa')
+      setErroNome('Preencha o nome da pesquisa');
     }
     else {
-      setErroNome('')
+      setErroNome('');
     }
   }
 
   const verificaData = (texto) => {
     setData(texto);
     if (texto === '') {
-      setErroData('Preencha a data')
+      setErroData('Preencha a data');
     }
     else {
-      setErroData('')
+      setErroData('');
     }
   }
 
@@ -148,7 +147,7 @@ const NewSearch = ({ navigation }) => {
         <Text style={estilo.txtCorpo}>Imagem</Text>
         <TouchableOpacity style={estilo.imagemContainer} onPress={pickImage}>
           {imagem ? (
-            <Image source={{ uri: imagem }} style={{ height: 100, width: 100, resizeMode: 'cover' }} />
+            <Image source={{ uri: imagem }} style={estilo.imagem} />
           ) : (
             <Text style={estilo.imagemText}>Câmera/Galeria de imagens</Text>
           )}
@@ -248,8 +247,14 @@ const estilo = StyleSheet.create({
   txtBotao: {
     fontSize: 18,
     fontFamily: 'AveriaLibre-Bold',
-    color: '#FFFFFF',
+    color: '#FFFFFF'
   },
+
+  imagem: {
+    height: 100,
+    width: 100,
+    resizeMode: 'cover'
+  }
 });
 
 export default NewSearch;
