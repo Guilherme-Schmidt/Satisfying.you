@@ -13,6 +13,9 @@ import { db } from '../firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 import { launchImageLibrary } from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const NewSearch = ({ navigation }) => {
   const [nome, setNome] = useState('');
@@ -20,6 +23,17 @@ const NewSearch = ({ navigation }) => {
   const [Erronome, setErroNome] = useState('');
   const [Errodata, setErroData] = useState('');
   const [imagem, setImagem] = useState('');//será uma string em base64
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const verificaNome = (texto) => {
+    setNome(texto);
+    if (texto === '') {
+      setErroNome('Preencha o nome da pesquisa');
+    }
+    else {
+      setErroNome('');
+    }
+  };
 
   //Redimensionamento do tamanho da imagem e conversão para base 64
   const converteUriToBase64 = async (uri) => {
@@ -56,6 +70,19 @@ const NewSearch = ({ navigation }) => {
     });
   };
 
+  const onChangeDate = (event, selectedDate) => {
+    if (data === '') {
+      setErroData("Preencha a data");
+    }
+    setShowDatePicker(false);
+    if (event?.type === 'set' && selectedDate) {
+      const formattedDate = format(selectedDate, 'dd/MM/yyyy', { locale: ptBR });
+      setData(formattedDate);
+      setErroData('');
+    }
+  };
+
+  //Adicionar pesquisa no firestore
   const addPesquisa = () => {
 
     const auth = getAuth();
@@ -87,26 +114,6 @@ const NewSearch = ({ navigation }) => {
       });
   };
 
-  const verificaNome = (texto) => {
-    setNome(texto);
-    if (texto === '') {
-      setErroNome('Preencha o nome da pesquisa');
-    }
-    else {
-      setErroNome('');
-    }
-  };
-
-  const verificaData = (texto) => {
-    setData(texto);
-    if (texto === '') {
-      setErroData('Preencha a data');
-    }
-    else {
-      setErroData('');
-    }
-  };
-
   const cadastrarPesquisa = () => {
     if (nome === '' || data === '' || imagem === '') {
       alert('Todos os campos devem ser preenchidos.');
@@ -136,12 +143,22 @@ const NewSearch = ({ navigation }) => {
           <TextInput
             style={estilo.txtEntradaData}
             value={data}
-            onChangeText={verificaData}
-            placeholder=""
-            placeholderTextColor="#3F92C5"
+            onFocus={() => setShowDatePicker(true)} //abre o calendario quando o TextInput receber foco
+            showSoftInputOnFocus={false} //desabilita o teclado ao focar no TextInput
           />
-          <MaterialIcons name="calendar-today" size={24} color="#3F92C5" style={estilo.iconeCalendario} />
+          <TouchableOpacity style={estilo.iconeCalendario} onPress={() => setShowDatePicker(true)}>
+            <MaterialIcons name="calendar-today" size={24} color="#3F92C5" />
+          </TouchableOpacity>
         </View>
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display='default'
+            onChange={onChangeDate}
+            locale="pt-BR" //define a localização para português do Brasil
+          />
+        )}
         <Text style={estilo.errorText}>{Errodata}</Text>
 
         <Text style={estilo.txtCorpo}>Imagem</Text>
