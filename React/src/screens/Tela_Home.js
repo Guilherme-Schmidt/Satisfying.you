@@ -1,11 +1,98 @@
 /* eslint-disable react-native/no-inline-styles */
-import * as React from 'react';
-import { View, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CardProjeto from '../components/CardProjeto';
+import CardProjeto from '../components/CardPesquisa';
 import BotaoPesquisa from '../components/BotaoPesquisa';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { useState, useEffect } from 'react';
+import { db } from '../firebase/config';
+import { collection, onSnapshot, query } from 'firebase/firestore';
+
+const Tela_Home = () => {
+  const navigation = useNavigation();
+  const [textPesquisa, setTextoPesquisa] = useState('');
+  const [listaPesquisas, setListaPesquisas] = useState([]); //será uma lista de objetos de pesquisa
+
+  //Pesquisas do usuário autenticado atual
+  const auth = getAuth();
+  const userID = auth.currentUser.uid;
+  const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas');
+
+  //assim que a tela home for aberta executa a função useEffect que contém a função para recuperar os dados do Firestore
+  useEffect(() => {
+    const consultaPesquisas = query(pesquisas_SubCollection);
+    //Função que executa a consulta
+    const unsubscribe = onSnapshot(consultaPesquisas, (snapshot) => {
+      const pesquisas = [];
+      snapshot.forEach((doc) => {
+        pesquisas.push({
+          id: doc.id, //id do documento do firebase
+          ...doc.data() //restante dos atributos
+        })
+      })
+      //setar o state que armazenará as pesquisas
+      setListaPesquisas(pesquisas);
+    })
+  }, []) // [] para o useEffect ser excutado somente uma única vez nessa tela
+
+
+  const goToNovaPesquisa = () => {
+    navigation.navigate('NewSearch');
+  };
+
+  //recebe titulo como argumento e passá-lo ao navegar
+  const goToAcoesPesquisa = (txtTitulo) => {
+    navigation.navigate('AcoesPesquisa', { titulo: txtTitulo }); // Navega para a tela AcoesPesquisa e passa o objeto titulo como um parâmetro, para o titulo do header mudar  de acordo com a pesquisa pressionada
+  };
+
+  //Componente para ser usado no renderItem da FlatList
+  const itemCard = ({ item }) => (
+    <CardProjeto
+      id={item.id}
+      imagem={item.imagem}
+      titulo={item.Nome}
+      data={item.data}
+      onPress={() => goToAcoesPesquisa(item.titulo)}
+    />
+  );
+
+
+  return (
+    <View style={styles.main}>
+      {/* Barra de pesquisa */}
+      <View style={styles.barraPesquisaContainer}>
+        <Icon name="magnify" size={24} color="#888" />
+        <TextInput
+          placeholder="Insira o termo de busca..."
+          placeholderTextColor="black"
+          value={textPesquisa}
+          onChangeText={setTextoPesquisa}
+          style={styles.textInput}
+        />
+      </View>
+
+      {/* Cards */}
+
+      {listaPesquisas.length === 0 ? (
+        <Text style={styles.msgListaVazia}>Não há pesquisas cadastradas</Text>
+      ) : (
+        <FlatList
+        horizontal
+        data={listaPesquisas}
+        renderItem={itemCard}
+        contentContainerStyle={styles.flatList}
+        keyExtractor={(pesquisa) => pesquisa.id}
+      />
+      )}
+
+      {/* Nova Pesquisa */}
+      <View>
+        <BotaoPesquisa texto="NOVA PESQUISA" onPress={goToNovaPesquisa} />
+      </View>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   main: {
@@ -28,70 +115,21 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: 'AveriaLibre-Regular',
   },
+  flatList: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 25,
+  },
+  msgListaVazia: {
+    flex: 1,
+    alignSelf: 'center',
+    color: '#FFFFFF',
+    fontFamily: 'AveriaLibre-Regular',
+    fontSize: 25,
+    marginTop: '7%'
+   
+  }
 });
-
-const Tela_Home = () => {
-  const navigation = useNavigation();
-  const [textPesquisa, setTextoPesquisa] = useState('');
-
-  const goToNovaPesquisa = () => {
-    navigation.navigate('NewSearch');
-  };
-
-  //recebe titulo como argumento e passá-lo ao navegar
-  const goToAcoesPesquisa = (txtTitulo) => {
-    navigation.navigate('AcoesPesquisa', {titulo: txtTitulo}); // Navega para a tela AcoesPesquisa e passa o objeto titulo como um parâmetro, para o titulo do header mudar  de acordo com a pesquisa pressionada
-  };
-
-  return (
-      <View style={styles.main}>
-        {/* Barra de pesquisa */}
-        <View style={styles.barraPesquisaContainer}>
-          <Icon name="magnify" size={24} color="#888" />
-          <TextInput
-            placeholder="Insira o termo de busca..."
-            placeholderTextColor="black"
-            value={textPesquisa}
-            onChangeText={setTextoPesquisa}
-            style={styles.textInput}
-          />
-        </View>
-
-        {/* Projetos de extensão */}
-        <ScrollView horizontal contentContainerStyle={{ flexDirection: 'row', alignItems: 'center', marginTop: 20, marginBottom: 25}}>
-          <CardProjeto
-            titulo="MENINAS CPU"
-            data="12/12/2023"
-            onPress={() => goToAcoesPesquisa('Meninas CPU')}
-          />
-          <CardProjeto
-            titulo="SECOMP"
-            data="12/12/2023"
-            onPress={() => goToAcoesPesquisa('Secomp')}
-          />
-          <CardProjeto
-            titulo="UBUNTU"
-            data="12/12/2023"
-            onPress={() => goToAcoesPesquisa('Ubuntu')}
-          />
-          <CardProjeto
-            titulo="TESTE"
-            data="12/12/2023"
-            onPress={() => goToAcoesPesquisa('Teste')}
-          />
-          <CardProjeto
-            titulo="TESTE"
-            data="12/12/2023"
-            onPress={() => goToAcoesPesquisa('Teste')}
-          />
-        </ScrollView>
-
-        {/* Nova Pesquisa */}
-        <View>
-          <BotaoPesquisa texto="NOVA PESQUISA" onPress={goToNovaPesquisa} />
-        </View>
-      </View>
-  );
-};
 
 export default Tela_Home;
