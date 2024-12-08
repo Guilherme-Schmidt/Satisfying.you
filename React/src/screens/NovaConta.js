@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  ActivityIndicator
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -17,7 +18,7 @@ const NovaConta = () => {
   const [erroSenha, setErroSenha] = useState('');
   const [erroEmail, setErroEmail] = useState('');
   const navigation = useNavigation();
-
+  const [loading, setLoading] = useState(false);
 
   const verificaSenha = (texto) => {
     setSenhaTemp(texto);
@@ -28,7 +29,7 @@ const NovaConta = () => {
     }
   };
 
-  const validarCadastro = () => {
+  const validarCadastro = async () => {
     // Verificar se os campos estão preenchidos ()
     if (email === '' || senha === '' || senhaTemp === '') {
       alert('Todos os campos devem ser preenchidos.');
@@ -45,7 +46,8 @@ const NovaConta = () => {
     }
 
     //realizar cadastro no Firebase
-    createUserWithEmailAndPassword(auth_module, email, senha)
+    setLoading(true);
+    await createUserWithEmailAndPassword(auth_module, email, senha)
       .then((UserCredential) => {
         console.log('Usuário criado com sucesso: ' + JSON.stringify(UserCredential));
         navigation.goBack(); //volta para login e desimpilha esta tela
@@ -53,24 +55,25 @@ const NovaConta = () => {
       .catch((error) => {
         console.log('erro: ' + JSON.stringify(error));
         if (error.code === 'auth/invalid-email') {
+          setLoading(false);
           setErroEmail('E-mail inválido');
         }
         else if (error.code === 'auth/email-already-in-use') {
+          setLoading(false);
           setErroEmail('Já existe um usuário cadastrado com esse e-mail!');
         }
         else if (error.code === 'auth/weak-password') {
+          setLoading(false);
           setErroSenha('A senha deve conter no mínimo 6 caracteres!');
           setErroEmail('');//limpar erro de email
         }
         else {
+          setLoading(false);
           alert('Erro ao criar conta.');
         }
       });
 
   };
-
-
-
 
   return (
     <View style={estilo.tela}>
@@ -103,10 +106,16 @@ const NovaConta = () => {
         <Text style={estilo.txtErro}>{erroSenha}</Text>
 
       </View>
-
-      <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
-        <Text style={estilo.txtBotao}>CADASTRAR</Text>
-      </TouchableOpacity>
+      {loading ? (
+            <TouchableOpacity style={estilo.botao}>
+              <Text style={estilo.txtBotao}>CADASTRANDO...</Text>
+              <ActivityIndicator style={estilo.loadingIndicator} size={'small'} color={'white'} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
+              <Text style={estilo.txtBotao}>CADASTRAR</Text>
+            </TouchableOpacity>
+          )}
 
     </View>
   );
@@ -167,6 +176,12 @@ const estilo = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
   },
+
+  loadingIndicator: {
+    position: 'absolute',
+    right: 170,
+    top: 6
+   },
 });
 
 export default NovaConta;

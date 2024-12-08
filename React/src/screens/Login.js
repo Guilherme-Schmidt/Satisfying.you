@@ -28,9 +28,9 @@ const Login = () => {
     }
   };
 
-  const goToHome = () => {
+  const goToHome = async () => {
     //autenticar usuário no Firebase
-    signInWithEmailAndPassword(auth_module, email, password)
+    await signInWithEmailAndPassword(auth_module, email, password)
       .then(() => {
         //limpar erro email
         setErroEmail('');

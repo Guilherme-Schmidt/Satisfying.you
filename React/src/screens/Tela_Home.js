@@ -7,28 +7,31 @@ import { useNavigation } from '@react-navigation/native';
 import { getAuth } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/config';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 
 const Tela_Home = () => {
   const navigation = useNavigation();
   const [textPesquisa, setTextoPesquisa] = useState('');
   const [listaPesquisas, setListaPesquisas] = useState([]); //será uma lista de objetos de pesquisa
 
-  //Pesquisas do usuário autenticado atual
+  //Pesquisas associadas ao usuário autenticado atual
   const auth = getAuth();
   const userID = auth.currentUser.uid;
   const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas');
 
   //assim que a tela home for aberta executa a função useEffect que contém a função para recuperar os dados do Firestore
   useEffect(() => {
-    const consultaPesquisas = query(pesquisas_SubCollection);
+    const consultaPesquisas = query(
+      pesquisas_SubCollection,
+      orderBy('timestamp', 'desc') //pesquisas mais novas aparecerão primeiro 
+    );
     //Função que executa a consulta
     const unsubscribe = onSnapshot(consultaPesquisas, (snapshot) => {
       const pesquisas = [];
       snapshot.forEach((doc) => {
         pesquisas.push({
           id: doc.id, //id do documento do firebase
-          ...doc.data() //restante dos atributos
+          ...doc.data() //restante dos atributos do documento
         })
       })
       //setar o state que armazenará as pesquisas
@@ -78,12 +81,12 @@ const Tela_Home = () => {
         <Text style={styles.msgListaVazia}>Não há pesquisas cadastradas</Text>
       ) : (
         <FlatList
-        horizontal
-        data={listaPesquisas}
-        renderItem={itemCard}
-        contentContainerStyle={styles.flatList}
-        keyExtractor={(pesquisa) => pesquisa.id}
-      />
+          horizontal
+          data={listaPesquisas}
+          renderItem={itemCard}
+          contentContainerStyle={styles.flatList}
+          keyExtractor={(pesquisa) => pesquisa.id}
+        />
       )}
 
       {/* Nova Pesquisa */}
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     fontSize: 25,
     marginTop: '7%'
-   
+
   }
 });
 

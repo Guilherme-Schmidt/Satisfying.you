@@ -5,25 +5,30 @@ import {
   StyleSheet,
   TextInput,
   Image,
+  ActivityIndicator
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase/config';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, setDoc, doc, query, where, getDocs } from 'firebase/firestore';
 import { launchImageLibrary } from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import { format } from 'date-fns';
+import { format} from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 
-const NewSearch = ({ navigation }) => {
+const NewSearch = () => {
   const [nome, setNome] = useState('');
   const [data, setData] = useState('');
   const [Erronome, setErroNome] = useState('');
   const [Errodata, setErroData] = useState('');
   const [imagem, setImagem] = useState('');//será uma string em base64
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const navigation = useNavigation();
 
   const verificaNome = (texto) => {
     setNome(texto);
@@ -71,31 +76,40 @@ const NewSearch = ({ navigation }) => {
   };
 
   const onChangeDate = (event, selectedDate) => {
-    if (data === '') {
-      setErroData("Preencha a data");
-    }
-    setShowDatePicker(false);
     if (event?.type === 'set' && selectedDate) {
       const formattedDate = format(selectedDate, 'dd/MM/yyyy', { locale: ptBR });
       setData(formattedDate);
       setErroData('');
+      setShowDatePicker(false); // Fecha o DateTimePicker após a seleção
+    }
+    else if (event?.type === 'dismissed') {
+      setShowDatePicker(false); // Fecha o DateTimePicker se o usuário cancelar
+      if (data === '') {
+        setErroData('Preencha a data')
+      }
     }
   };
 
   //Adicionar pesquisa no firestore
-  const addPesquisa = () => {
+  const addPesquisa = async () => {
 
     const auth = getAuth();
     const userID = auth.currentUser.uid; //obtém o uid do usuário autenticado atual
-    const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); //referência p/ subcoleção pesquisas do respectivo usuário autenticado (usando userID)
+    const userEmail = auth.currentUser.email;
+    const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); //referência p/ subcoleçao pesquisas que estará associada a um único userID
 
-    if (!userID) {
-      alert('Usuário não autenticado');
+    //Verificar se já existe uma pesquisa de mesmo nome
+    const q = query(pesquisas_SubCollection, where('Nome', '==', nome.toUpperCase()));
+    const querySnapshot = await getDocs(q); //getDocs() executa a consulta
+
+    //caso já exista uma pesquisa de mesmo nome
+    if (querySnapshot.empty === false) {
+      alert('Pesquisa não adicionada, pois já existe uma pesquisa com esse nome.')
       return;
     }
 
     const docPesquisa = {
-      Nome: nome,
+      Nome: nome.toUpperCase(),
       data: data,
       imagem: imagem,
       excelente: 0,
@@ -103,25 +117,38 @@ const NewSearch = ({ navigation }) => {
       neutro: 0,
       ruim: 0,
       pessimo: 0,
+      timestamp: new Date().getTime(), // Adiciona o timestamp como base para ordenação
     };
-
-    addDoc(pesquisas_SubCollection, docPesquisa)
+    //Adicionar documentos de pesquisa à subcoleção pesquisas
+    await addDoc(pesquisas_SubCollection, docPesquisa)
       .then((docRef) => {
-        console.log('Novo documento inserido com sucesso: ' + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
+        console.log("Novo documento de pesquisa inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
       })
       .catch((error) => {
-        console.log('Erro: ' + error);
+        console.log("Erro na inserção do documento de pesquisa : " + error);
       });
+
+    //Adicionar campo email ao documento de usuário
+    await setDoc(doc(db, 'usuarios', userID), {
+      Email: userEmail
+    })
+      .then(() => {
+        console.log("Adição do campo Email no documento de usuário feita com sucesso")
+      })
+      .catch((error) => {
+        console.log("Erro: " + error)
+      })
   };
 
-  const cadastrarPesquisa = () => {
+  const cadastrarPesquisa = async () => {
     if (nome === '' || data === '' || imagem === '') {
       alert('Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
     else if (Erronome === '' && Errodata === '') {
       //cadastrar no firestore
-      addPesquisa();
+      setLoading(true);// Ativa o indicador de carregamento
+      await addPesquisa();
       navigation.goBack(); //Volta para Home(Drawer) e desimpilha esta tela
     }
   };
@@ -143,8 +170,12 @@ const NewSearch = ({ navigation }) => {
           <TextInput
             style={estilo.txtEntradaData}
             value={data}
-            onFocus={() => setShowDatePicker(true)} //abre o calendario quando o TextInput receber foco
-            showSoftInputOnFocus={false} //desabilita o teclado ao focar no TextInput
+            onFocus={() => {
+              if (!showDatePicker) {
+                setShowDatePicker(true); // Apenas abre o calendário se não estiver visível
+              }
+            }}
+            showSoftInputOnFocus={false} // Desabilita o teclado
           />
           <TouchableOpacity style={estilo.iconeCalendario} onPress={() => setShowDatePicker(true)}>
             <MaterialIcons name="calendar-today" size={24} color="#3F92C5" />
@@ -172,9 +203,16 @@ const NewSearch = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={estilo.botoesContainer}>
-          <TouchableOpacity style={estilo.botaoCadastrar} onPress={cadastrarPesquisa}>
-            <Text style={estilo.txtBotao}>CADASTRAR</Text>
-          </TouchableOpacity>
+          {loading ? (
+            <TouchableOpacity style={estilo.botaoCadastrar}>
+              <Text style={estilo.txtBotao}>CADASTRANDO...</Text>
+              <ActivityIndicator style={estilo.loadingIndicator} size={'small'} color={'white'} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity style={estilo.botaoCadastrar} onPress={cadastrarPesquisa}>
+              <Text style={estilo.txtBotao}>CADASTRAR</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>
@@ -266,12 +304,16 @@ const estilo = StyleSheet.create({
     fontFamily: 'AveriaLibre-Bold',
     color: '#FFFFFF',
   },
-
   imagem: {
     height: 100,
     width: 100,
     resizeMode: 'cover',
   },
+  loadingIndicator: {
+   position: 'absolute',
+   right: 150,
+  }
+
 });
 
 export default NewSearch;
