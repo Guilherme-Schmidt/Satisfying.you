@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -29,61 +30,66 @@ const NovaConta = () => {
     }
   };
 
+  const verificaEmail = (texto) => {
+    setEmail(texto);
+    const emailRegex = /^(?!.*\.\{2\})[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (texto === '' || emailRegex.test(texto)) {
+      setErroEmail('');
+    } else {
+      setErroEmail('E-mail inválido');
+    }
+  };
+
   const validarCadastro = async () => {
+
     // Verificar se os campos estão preenchidos ()
     if (email === '' || senha === '' || senhaTemp === '') {
-      alert('Todos os campos devem ser preenchidos.');
+      Alert.alert('Erro de cadastro', 'Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
+
     // Verificar se as senhas coincidem
     if (senha !== senhaTemp) {
-      setErroSenha('O campo repetir senha difere da senha');
-      setErroEmail(''); //limpa erro de email
+      if(erroSenha === ''){
+        setErroSenha('O campo repetir senha difere da senha')
+      }
       return;
     }
-    else {
-      setErroSenha('');
+
+    try {
+      //realizar cadastro no Firebase
+      setLoading(true);
+      const userCredential = await createUserWithEmailAndPassword(auth_module, email, senha);
+      console.log('Usuário criado com sucesso: ' + JSON.stringify(userCredential));
+      navigation.goBack(); //volta para login e desimpilha esta tela
     }
-
-    //realizar cadastro no Firebase
-    setLoading(true);
-    await createUserWithEmailAndPassword(auth_module, email, senha)
-      .then((UserCredential) => {
-        console.log('Usuário criado com sucesso: ' + JSON.stringify(UserCredential));
-        navigation.goBack(); //volta para login e desimpilha esta tela
-      })
-      .catch((error) => {
-        console.log('erro: ' + JSON.stringify(error));
-        if (error.code === 'auth/invalid-email') {
-          setLoading(false);
-          setErroEmail('E-mail inválido');
-        }
-        else if (error.code === 'auth/email-already-in-use') {
-          setLoading(false);
-          setErroEmail('Já existe um usuário cadastrado com esse e-mail!');
-        }
-        else if (error.code === 'auth/weak-password') {
-          setLoading(false);
-          setErroSenha('A senha deve conter no mínimo 6 caracteres!');
-          setErroEmail('');//limpar erro de email
-        }
-        else {
-          setLoading(false);
-          alert('Erro ao criar conta.');
-        }
-      });
-
+    catch (error) {
+      console.log('erro: ' + JSON.stringify(error));
+      if (error.code === 'auth/invalid-email') {
+        setErroEmail('E-mail inválido');
+      } else if (error.code === 'auth/email-already-in-use') {
+        setErroEmail('Já existe um usuário cadastrado com esse e-mail!');
+      } else if (error.code === 'auth/weak-password') {
+        setErroSenha('A senha deve conter no mínimo 6 caracteres!');
+        setErroEmail(''); //limpar erro de email
+      } else {
+        Alert.alert('Erro de cadastro', 'Erro ao criar conta.');
+      }
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
     <View style={estilo.tela}>
-
       <View style={estilo.corpo}>
         <Text style={estilo.txtCorpo}>E-mail</Text>
         <TextInput
           style={estilo.txtEntrada}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={verificaEmail}
           keyboardType="email-address"
         />
         <Text style={estilo.txtErro}>{erroEmail}</Text>
@@ -104,19 +110,17 @@ const NovaConta = () => {
           secureTextEntry={true}
         />
         <Text style={estilo.txtErro}>{erroSenha}</Text>
-
       </View>
       {loading ? (
-            <TouchableOpacity style={estilo.botao}>
-              <Text style={estilo.txtBotao}>CADASTRANDO...</Text>
-              <ActivityIndicator style={estilo.loadingIndicator} size={'small'} color={'white'} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
-              <Text style={estilo.txtBotao}>CADASTRAR</Text>
-            </TouchableOpacity>
-          )}
-
+        <TouchableOpacity style={estilo.botao}>
+          <Text style={estilo.txtBotao}>CADASTRANDO...</Text>
+          <ActivityIndicator style={estilo.loadingIndicator} size={'small'} color={'white'} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={estilo.botao} onPress={validarCadastro}>
+          <Text style={estilo.txtBotao}>CADASTRAR</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -159,7 +163,6 @@ const estilo = StyleSheet.create({
     color: '#FD7979',
     fontFamily: 'AveriaLibre-Regular',
     marginTop: 2,
-
   },
 
   botao: {
@@ -181,7 +184,7 @@ const estilo = StyleSheet.create({
     position: 'absolute',
     right: 170,
     top: 6
-   },
+  },
 });
 
 export default NovaConta;

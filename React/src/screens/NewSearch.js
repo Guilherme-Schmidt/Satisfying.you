@@ -5,19 +5,20 @@ import {
   StyleSheet,
   TextInput,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { getAuth } from 'firebase/auth';
 import { db } from '../firebase/config';
 import { collection, addDoc, setDoc, doc, query, where, getDocs } from 'firebase/firestore';
-import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
-import { format} from 'date-fns';
+import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const NewSearch = () => {
   const [nome, setNome] = useState('');
@@ -27,7 +28,6 @@ const NewSearch = () => {
   const [imagem, setImagem] = useState('');//será uma string em base64
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const navigation = useNavigation();
 
   const verificaNome = (texto) => {
@@ -75,74 +75,87 @@ const NewSearch = () => {
     });
   };
 
+  /*
+   // Capturar imagem da câmera
+   const captureImage = () => {
+    launchCamera({ mediaType: 'photo' }, (result) => {
+      if (result.assets && result.assets.length > 0) {
+        converteUriToBase64(result.assets[0].uri); // Converte a imagem capturada para base64
+      }
+    });
+  }
+  */
+
+  //Calendário
   const onChangeDate = (event, selectedDate) => {
-    if (event?.type === 'set' && selectedDate) {
+    if (event.type === 'set' && selectedDate) {
+      setShowDatePicker(false);  // Fecha o DateTimePicker após a seleção
       const formattedDate = format(selectedDate, 'dd/MM/yyyy', { locale: ptBR });
       setData(formattedDate);
       setErroData('');
-      setShowDatePicker(false); // Fecha o DateTimePicker após a seleção
     }
-    else if (event?.type === 'dismissed') {
+    else if (event.type === 'dismissed') {
       setShowDatePicker(false); // Fecha o DateTimePicker se o usuário cancelar
       if (data === '') {
-        setErroData('Preencha a data')
+        setErroData('Preencha a data');
       }
     }
   };
 
+  const userEmail = useSelector((state) => state.login.email); //acessar o estado atual do email armazenado na store
+  const userID = useSelector((state) => state.login.userID)  //acessar o estado atual do userID armazenado na store
+
   //Adicionar pesquisa no firestore
   const addPesquisa = async () => {
 
-    const auth = getAuth();
-    const userID = auth.currentUser.uid; //obtém o uid do usuário autenticado atual
-    const userEmail = auth.currentUser.email;
-    const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); //referência p/ subcoleçao pesquisas que estará associada a um único userID
+    //referência p/ subcoleçao pesquisas que estará associada a um userID específico
+    const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); 
 
-    //Verificar se já existe uma pesquisa de mesmo nome
-    const q = query(pesquisas_SubCollection, where('Nome', '==', nome.toUpperCase()));
-    const querySnapshot = await getDocs(q); //getDocs() executa a consulta
+    //Verificar se já existe uma pesquisa de mesmo nome (definição da consulta)
+    const q = query(pesquisas_SubCollection, where('nome', '==', nome.toUpperCase()));
 
-    //caso já exista uma pesquisa de mesmo nome
-    if (querySnapshot.empty === false) {
-      alert('Pesquisa não adicionada, pois já existe uma pesquisa com esse nome.')
-      return;
-    }
+    try {
+      const querySnapshot = await getDocs(q); //getDocs() executa a consulta
 
-    const docPesquisa = {
-      Nome: nome.toUpperCase(),
-      data: data,
-      imagem: imagem,
-      excelente: 0,
-      bom: 0,
-      neutro: 0,
-      ruim: 0,
-      pessimo: 0,
-      timestamp: new Date().getTime(), // Adiciona o timestamp como base para ordenação
-    };
-    //Adicionar documentos de pesquisa à subcoleção pesquisas
-    await addDoc(pesquisas_SubCollection, docPesquisa)
-      .then((docRef) => {
-        console.log("Novo documento de pesquisa inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
-      })
-      .catch((error) => {
-        console.log("Erro na inserção do documento de pesquisa : " + error);
+      //caso já exista uma pesquisa de mesmo nome
+      if (querySnapshot.empty === false) {
+        Alert.alert('Erro de Cadastro', 'Pesquisa não adicionada, pois já existe uma pesquisa com esse nome.')
+        return;
+      }
+
+      //caso não exista, prosseguir com o cadastro
+      const docPesquisa = {
+        nome: nome.toUpperCase(),
+        data: data,
+        imagem: imagem,
+        excelente: 0,
+        bom: 0,
+        neutro: 0,
+        ruim: 0,
+        pessimo: 0,
+        timestamp: new Date().getTime(), // Adiciona o timestamp como base para ordenação
+      };
+      //Adicionar documentos de pesquisa à subcoleção pesquisas
+      docRef = await addDoc(pesquisas_SubCollection, docPesquisa);
+      console.log("Novo documento de pesquisa inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
+
+      //Adicionar campo email ao documento de usuário
+      await setDoc(doc(db, 'usuarios', userID), {
+        Email: userEmail
       });
-
-    //Adicionar campo email ao documento de usuário
-    await setDoc(doc(db, 'usuarios', userID), {
-      Email: userEmail
-    })
-      .then(() => {
-        console.log("Adição do campo Email no documento de usuário feita com sucesso")
-      })
-      .catch((error) => {
-        console.log("Erro: " + error)
-      })
+      console.log("Adição do campo Email no documento de usuário feita com sucesso");
+    }
+    catch (error) {
+      console.log("Erro ao adicionar pesquisa: " + error);
+    }
+    finally{
+      setLoading(false);
+    }
   };
 
   const cadastrarPesquisa = async () => {
     if (nome === '' || data === '' || imagem === '') {
-      alert('Todos os campos devem ser preenchidos.');
+      Alert.alert('Erro de Cadastro', 'Todos os campos devem ser preenchidos.');
       return; //encerra função
     }
     else if (Erronome === '' && Errodata === '') {
@@ -181,6 +194,7 @@ const NewSearch = () => {
             <MaterialIcons name="calendar-today" size={24} color="#3F92C5" />
           </TouchableOpacity>
         </View>
+        {/*renderização condicional do calendario */}
         {showDatePicker && (
           <DateTimePicker
             value={new Date()}
@@ -194,12 +208,12 @@ const NewSearch = () => {
 
         <Text style={estilo.txtCorpo}>Imagem</Text>
         <TouchableOpacity style={estilo.imagemContainer} onPress={pickImage}>
+          {/*renderização condicional, conteúdo do TouchableOpacity */}
           {imagem ? (
             <Image source={{ uri: imagem }} style={estilo.imagem} />
           ) : (
             <Text style={estilo.imagemText}>Câmera/Galeria de imagens</Text>
           )}
-
         </TouchableOpacity>
 
         <View style={estilo.botoesContainer}>
@@ -310,8 +324,8 @@ const estilo = StyleSheet.create({
     resizeMode: 'cover',
   },
   loadingIndicator: {
-   position: 'absolute',
-   right: 150,
+    position: 'absolute',
+    right: 155,
   }
 
 });

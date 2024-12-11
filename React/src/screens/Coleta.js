@@ -2,13 +2,16 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
+import { useSelector } from 'react-redux';
 
-const FaceButton = ({ nomeIcone, corIcone, textoIcone}) => {
+
+const FaceButton = ({ nomeIcone, corIcone, textoIcone }) => {
   const navigation = useNavigation();
 
-  const goToAgradecimento = () =>{
+  const goToAgradecimento = () => {
     navigation.navigate('Agradecimento');
   };
+
   return (
     <TouchableOpacity onPress={goToAgradecimento} style={styles.faceButton}>
       <Icon name={nomeIcone} size={50} color={corIcone} />
@@ -20,10 +23,15 @@ const FaceButton = ({ nomeIcone, corIcone, textoIcone}) => {
 const Coleta = () => {
   const navigation = useNavigation();
 
+  //acessar o nome da pesquisa selecionada através da store
+  const nomePesquisa = useSelector((state) => state.pesquisa.nome);
+  //pegar o ano atual da pesquisa
+  const date = new Date();
+ 
   return (
     <View style={styles.tela}>
       <View style={styles.cabecalho}>
-        <Text style={styles.questionText}>O que você achou do Carnaval 2024?</Text>
+        <Text style={styles.questionText}>O que você achou do {nomePesquisa} {date.getFullYear()}</Text>
       </View>
 
       <View style={styles.buttonContainer}>

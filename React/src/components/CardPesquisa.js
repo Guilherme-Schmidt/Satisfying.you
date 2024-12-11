@@ -3,8 +3,6 @@ import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 const CardPesquisa = props => {
 
-  const idPesquisa = props.id //guardar id do Firestore
-
   return (
     <TouchableOpacity style={styles.main} onPress={props.onPress}>
       {/* Imagem */}

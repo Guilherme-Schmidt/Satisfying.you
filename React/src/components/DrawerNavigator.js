@@ -8,15 +8,19 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import Tela_Home from '../screens/Tela_Home';
+import { useSelector } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
+
+  const userEmail = useSelector((state) => state.login.email); //acessar o estado atual do email armazenado na store
   const navigation = useNavigation();
+
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.header}>
-        <Text style={styles.textoHeader}>usuario@dominio.com</Text>
+        <Text style={styles.textoEmail}>{userEmail}</Text>
       </View>
       <View style={styles.divider} />
       <DrawerItemList {...props} />
@@ -56,12 +60,13 @@ const DrawerNavigator = () => {
 const styles = StyleSheet.create({
   header: {
     padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
-  textoHeader: {
-    fontSize: 26,
+  textoEmail: {
+    fontSize: 19,
     color: '#fff',
-    textAlign: 'center',
     fontFamily: 'AveriaLibre-Regular',
   },
 

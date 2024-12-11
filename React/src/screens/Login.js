@@ -5,21 +5,26 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth_module } from '../firebase/config';
+import { useDispatch } from 'react-redux'; //para disparar açoes do redux
+import { reducerSetLogin } from '../../redux/loginSlice'; //ação que será disparada
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [erroEmail, setErroEmail] = useState('');
   const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const verificaEmail = (texto) => {
     setEmail(texto);
-    const emailRegex = /^(?!.*\.{2})[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^(?!.*\.\{2\})[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (texto === '' || emailRegex.test(texto)) {
       setErroEmail('');
@@ -28,30 +33,39 @@ const Login = () => {
     }
   };
 
-  const goToHome = async () => {
-    //autenticar usuário no Firebase
-    await signInWithEmailAndPassword(auth_module, email, password)
-      .then(() => {
-        //limpar erro email
-        setErroEmail('');
-        //navegar para home
-        navigation.navigate('DrawerNavigator'); //Home está contida no drawer
-      })
-      .catch((error) => {
-        console.log('Falha ao autenticar usuário: ' + JSON.stringify(error));
-        if (error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-email') {
-          setErroEmail('E-mail e/ou senha inválidos');
-        }
-        else if (error.code === 'auth/too-many-requests') {
-          setErroEmail('Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.');
-        }
-        else if (error.code === 'auth/missing-password') {
-          setErroEmail('É necessário informar a senha.');
-        }
-        else {
-          setErroEmail('Erro ao fazer login.');
-        }
-      });
+  const entrar = async () => {
+    try {
+      //autenticar usuário no Firebase
+      setLoading(true);
+      const UserCredential = await signInWithEmailAndPassword(auth_module, email, password);
+
+      //recuperar o uid do usuario que efetuou o login
+      const userID = UserCredential.user.uid;
+
+      //ação que será disparada no reducer de login para armazenar na store os estados atuais dos dados de login
+      dispatch(reducerSetLogin({ email: email, userID: userID }));
+
+      //limpar erro email
+      setErroEmail('');
+
+      //navegar para home
+      navigation.navigate('DrawerNavigator'); //Home está contida no drawer
+    }
+    catch (error) {
+      console.log('Falha ao autenticar usuário: ' + JSON.stringify(error));
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-email') {
+        setErroEmail('E-mail e/ou senha inválidos');
+      } else if (error.code === 'auth/too-many-requests') {
+        setErroEmail('Muitas tentativas falhas. Aguarde alguns minutos antes de tentar novamente.');
+      } else if (error.code === 'auth/missing-password') {
+        setErroEmail('É necessário informar a senha.');
+      } else {
+        setErroEmail('Erro ao fazer login.');
+      }
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   const goToNovaConta = () => {
@@ -92,9 +106,16 @@ const Login = () => {
           <Text style={estilos.txtErro}>{erroEmail}</Text>
         </View>
 
-        <TouchableOpacity style={estilos.botaoFundo} onPress={goToHome}>
-          <Text style={estilos.txtBotao}>Entrar</Text>
-        </TouchableOpacity>
+        {loading ? (
+          <TouchableOpacity style={estilos.botaoFundo}>
+            <Text style={estilos.txtBotao}>Autenticando...</Text>
+            <ActivityIndicator style={estilos.loadingIndicator} size={'small'} color={'white'} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={estilos.botaoFundo} onPress={entrar}>
+            <Text style={estilos.txtBotao}>Entrar</Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           style={[estilos.botaoCriarFundo, { marginTop: 15 }]}
@@ -208,6 +229,10 @@ const estilos = StyleSheet.create({
     elevation: 10,
     marginTop: 3,
     marginBottom: 10,
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    right: 200,
   },
 });
 

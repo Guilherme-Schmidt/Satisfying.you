@@ -1,20 +1,23 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useLayoutEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, {useLayoutEffect} from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useSelector } from 'react-redux';
+
 
 const AcoesPesquisa = () => {
 
   const navigation = useNavigation(); //hook useNavigation
-  const route = useRoute(); //hook useRoute()
-  const { titulo } = route.params || {}; //desestruturação para acessar a propriedade titulo. route.params guarda os objetos passados durante a navegação
-
-  // Define o título do header (atualiza o título antes que a tela seja exibida ao usuário)
+  
+  //acessar o nome da pesquisa selecionada através da store
+  const nomePesquisa = useSelector((state) => state.pesquisa.nome);
+  
+  // Define o título do header 
   useLayoutEffect(() => {
-    if (titulo) {
-      navigation.setOptions({ title: titulo });
+    if (nomePesquisa) {
+      navigation.setOptions({ title: nomePesquisa });
     }
-  }, [navigation, titulo]); //dependencias , sempre que uma delas mudarem o useLayoutEffect será executado
+  }, [nomePesquisa]); //dependencia, sempre que nomePesquisa mudar o useLayoutEffect será executado
 
   const goToModificarPesquisa = () => {
     navigation.navigate('ModificarPesquisa');

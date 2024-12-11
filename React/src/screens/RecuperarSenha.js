@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 import { auth_module } from '../firebase/config';
 import { sendPasswordResetEmail } from 'firebase/auth';
@@ -13,27 +14,34 @@ const RecuperarSenha = (props) => {
 
   const [email, setEmail] = useState('');
   const [erroEmail, setErroEmail] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const validarRecuperação = () => {
 
+  const validarRecuperação = async () => {
     //Enviar e-mail de redefinição de senha
-    sendPasswordResetEmail(auth_module, email)
-      .then(() => {
-        props.navigation.goBack(); //volta para tela de login e desimpilha esta tela
-      })
-      .catch((error) => {
-        console.log('Falha ao enviar e-mail de redefinição de senha: ' + JSON.stringify(error));
-        if (error.code === 'auth/invalid-email') {
-          setErroEmail('E-mail inválido!');
-        }
-        else if (error.code === 'auth/missing-email') {
-          setErroEmail('É necessário informar um E-mail');
-        }
-        else {
-          setErroEmail('Erro ao enviar e-mail de redefinição de senha.');
-        }
-      });
+    try {
+      setLoading(true);
+      await sendPasswordResetEmail(auth_module, email);
+      console.log("Email de redefinição de senha enviado com sucesso.")
+      props.navigation.goBack(); //volta para tela de login e desimpilha esta tela
+    }
+    catch (error) {
+      console.log('Falha ao enviar e-mail de redefinição de senha: ' + JSON.stringify(error));
+      if (error.code === 'auth/invalid-email') {
+        setErroEmail('E-mail inválido!');
+      }
+      else if (error.code === 'auth/missing-email') {
+        setErroEmail('É necessário informar um E-mail');
+      }
+      else {
+        setErroEmail('Erro ao enviar e-mail de redefinição de senha.');
+      }
+    }
+    finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <View style={estilos.tela}>
@@ -48,9 +56,18 @@ const RecuperarSenha = (props) => {
           autoCapitalize="none" />
         <Text style={estilos.txtErro}>{erroEmail}</Text>
       </View>
-      <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
-        <Text style={estilos.txtBotao}>RECUPERAR</Text>
-      </TouchableOpacity>
+
+      {loading ? (
+        <TouchableOpacity style={estilos.botaoContainer}>
+          <Text style={estilos.txtBotao}>Enviando e-mail...</Text>
+          <ActivityIndicator style={estilos.loadingIndicator} size={'small'} color={'white'} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={estilos.botaoContainer} onPress={validarRecuperação}>
+          <Text style={estilos.txtBotao}>RECUPERAR</Text>
+        </TouchableOpacity>
+      )}
+
 
     </View>
   );
@@ -107,6 +124,10 @@ const estilos = StyleSheet.create({
     marginTop: '2%',
     fontSize: 16,
     fontFamily: 'AveriaLibre-Regular',
+  },
+  loadingIndicator: {
+    position: 'absolute',
+    right: 190,
   },
 });
 

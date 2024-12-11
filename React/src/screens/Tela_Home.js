@@ -1,41 +1,51 @@
 /* eslint-disable react-native/no-inline-styles */
-import { View, StyleSheet, Text, TextInput, FlatList } from 'react-native';
+import { View, StyleSheet, Text, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CardProjeto from '../components/CardPesquisa';
+import CardPesquisa from '../components/CardPesquisa';
 import BotaoPesquisa from '../components/BotaoPesquisa';
 import { useNavigation } from '@react-navigation/native';
-import { getAuth } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import { db } from '../firebase/config';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { reducerSetPesquisa } from '../../redux/pesquisaSlice';
 
 const Tela_Home = () => {
   const navigation = useNavigation();
   const [textPesquisa, setTextoPesquisa] = useState('');
   const [listaPesquisas, setListaPesquisas] = useState([]); //será uma lista de objetos de pesquisa
+  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  //Pesquisas associadas ao usuário autenticado atual
-  const auth = getAuth();
-  const userID = auth.currentUser.uid;
-  const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas');
+  //acessar o estado atual do userID armazenado na store
+  const userID = useSelector((state) => state.login.userID)
 
-  //assim que a tela home for aberta executa a função useEffect que contém a função para recuperar os dados do Firestore
+  //Pesquisas associadas ao usuário autenticado atual 
+  const pesquisasRef = collection(db, 'usuarios', userID, 'pesquisas'); //referência à sub-coleção pesquisas de um usuário específico
+
+  //assim que a tela home for aberta, executa a função useEffect que contém a função para recuperar os dados do Firestore
   useEffect(() => {
+
+    //definição da consulta
     const consultaPesquisas = query(
-      pesquisas_SubCollection,
-      orderBy('timestamp', 'desc') //pesquisas mais novas aparecerão primeiro 
+      pesquisasRef,
+      orderBy('timestamp', 'desc') //para as pesquisas mais novas aparecerem primeiro 
     );
-    //Função que executa a consulta
+
+    //Função que executa a consulta (onSnapshot é executado sempre que houver alteração na coleção consultada)
     const unsubscribe = onSnapshot(consultaPesquisas, (snapshot) => {
       const pesquisas = [];
       snapshot.forEach((doc) => {
         pesquisas.push({
-          id: doc.id, //id do documento do firebase
-          ...doc.data() //restante dos atributos do documento
+          id: doc.id, //id do documento no firestore
+          ...doc.data() //restante dos dados do documento
         })
       })
       //setar o state que armazenará as pesquisas
       setListaPesquisas(pesquisas);
+      //desabilitar o  ActivityIndicator
+      setLoading(false);
     })
   }, []) // [] para o useEffect ser excutado somente uma única vez nessa tela
 
@@ -44,22 +54,24 @@ const Tela_Home = () => {
     navigation.navigate('NewSearch');
   };
 
-  //recebe titulo como argumento e passá-lo ao navegar
-  const goToAcoesPesquisa = (txtTitulo) => {
-    navigation.navigate('AcoesPesquisa', { titulo: txtTitulo }); // Navega para a tela AcoesPesquisa e passa o objeto titulo como um parâmetro, para o titulo do header mudar  de acordo com a pesquisa pressionada
+  //capturar os dados da pesquisa selecionada e navegar para AcoesPesquisa
+  const goToAcoesPesquisa = (pesquisaID, nome, data, imagem) => {
+    //ação que será disparada no reducer de pesquisa para armazenar na store os estados atuais dos dados da pesquisa
+    dispatch(reducerSetPesquisa({ pesquisaID: pesquisaID, nome: nome, data: data, imagem: imagem }));
+    //navegar para AcoesPesquisa
+    navigation.navigate('AcoesPesquisa');
+    console.log(pesquisaID)
   };
 
   //Componente para ser usado no renderItem da FlatList
-  const itemCard = ({ item }) => (
-    <CardProjeto
-      id={item.id}
+  const itemCard = ({ item }) => ( //item. -> acessa os campos do documento de pesquisa cadastrado no Firestore
+    <CardPesquisa
       imagem={item.imagem}
-      titulo={item.Nome}
+      titulo={item.nome}
       data={item.data}
-      onPress={() => goToAcoesPesquisa(item.titulo)}
+      onPress={() => goToAcoesPesquisa(item.id, item.nome, item.data, item.imagem)} // item.id é o id do documento de pesquisa no Firestore
     />
   );
-
 
   return (
     <View style={styles.main}>
@@ -75,9 +87,10 @@ const Tela_Home = () => {
         />
       </View>
 
-      {/* Cards */}
-
-      {listaPesquisas.length === 0 ? (
+      {/* renderização condicional dos cards */}
+      {loading ? (
+        <ActivityIndicator style={styles.loadingIndicator} size={'large'} color={'white'} />
+      ) : listaPesquisas.length === 0 ? (
         <Text style={styles.msgListaVazia}>Não há pesquisas cadastradas</Text>
       ) : (
         <FlatList
@@ -87,8 +100,9 @@ const Tela_Home = () => {
           contentContainerStyle={styles.flatList}
           keyExtractor={(pesquisa) => pesquisa.id}
         />
-      )}
-
+      )
+    }
+      
       {/* Nova Pesquisa */}
       <View>
         <BotaoPesquisa texto="NOVA PESQUISA" onPress={goToNovaPesquisa} />
@@ -131,8 +145,10 @@ const styles = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     fontSize: 25,
     marginTop: '7%'
-
-  }
+  },
+  loadingIndicator: {
+    flex: 1
+  },
 });
 
 export default Tela_Home;
