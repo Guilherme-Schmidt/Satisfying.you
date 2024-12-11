@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 //valores iniciais do estado global pesquisa
 const initialValues = {
-    pesquisaID: null, //acessar os dados da pesquisa pelo seu id (usado somente para editar, excluir e gerar relatorio(carregar dado do firestore))
-    //colocar os outros campos para otimizar tempo de carregamento na hora de exibir o título do header em AcoesPesquisa (evitar consultas no firestore a cada pesquisa selecionada)
+    pesquisaID: null, //acessar os dados da pesquisa pelo seu id (usado somente para editar, excluir e gerar relatorio(carregar dados do firestore))
+    //colocar os outros campos para otimizar tempo de carregamento na hora de exibir o título do header em AcoesPesquisa e trazer dados pré-carregados no modificar pesquisa (evitar consultas no firestore a cada pesquisa selecionada)
     nome: null,
     data: null,
     imagem: null
