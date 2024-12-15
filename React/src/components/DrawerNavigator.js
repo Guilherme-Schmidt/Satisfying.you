@@ -1,14 +1,16 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Tela_Home from '../screens/Tela_Home';
+import { auth_module } from '../firebase/config';
 import { useSelector } from 'react-redux';
+import { signOut } from 'firebase/auth';
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +18,18 @@ function CustomDrawerContent(props) {
 
   const userEmail = useSelector((state) => state.login.email); //acessar o estado atual do email armazenado na store
   const navigation = useNavigation();
+
+  //logout do app
+  const sair = async () => {
+    try {
+      await signOut(auth_module);
+      console.log('Usuário deslogado com sucesso');
+      navigation.popToTop();
+    }
+    catch (error) {
+      console.log('Erro ao fazer logout: ' + error)
+    }
+  }
 
   return (
     <DrawerContentScrollView {...props}>
@@ -26,11 +40,7 @@ function CustomDrawerContent(props) {
       <DrawerItemList {...props} />
 
       <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.botaoSair}
-          onPress={() => {
-            navigation.popToTop();
-          }}>
+        <TouchableOpacity style={styles.botaoSair} onPress={sair}>
           <Icon name="sign-out" size={30} color={'#fff'} marginRight={5} />
           <Text style={styles.txtBotaoSair}>Sair</Text>
         </TouchableOpacity>

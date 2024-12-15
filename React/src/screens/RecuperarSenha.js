@@ -14,7 +14,7 @@ const RecuperarSenha = (props) => {
 
   const [email, setEmail] = useState('');
   const [erroEmail, setErroEmail] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
 
   const validarRecuperação = async () => {

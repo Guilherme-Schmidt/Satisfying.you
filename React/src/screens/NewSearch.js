@@ -112,7 +112,7 @@ const NewSearch = () => {
     const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas'); 
 
     //Verificar se já existe uma pesquisa de mesmo nome (definição da consulta)
-    const q = query(pesquisas_SubCollection, where('nome', '==', nome.toUpperCase()));
+    const q = query(pesquisas_SubCollection, where('nome', '==', nome.toUpperCase().trim()));
 
     try {
       const querySnapshot = await getDocs(q); //getDocs() executa a consulta
@@ -125,7 +125,7 @@ const NewSearch = () => {
 
       //caso não exista, prosseguir com o cadastro
       const docPesquisa = {
-        nome: nome.toUpperCase(),
+        nome: nome.toUpperCase().trim(),
         data: data,
         imagem: imagem,
         excelente: 0,

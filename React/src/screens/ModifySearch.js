@@ -76,7 +76,7 @@ const ModifySearch = ({ navigation }) => {
     }
   };
 
-  //valores acessados da store no redux
+  //valores de usuario e de pesquisa (ids) acessados da store no redux
   const userID = useSelector((state) => state.login.userID);
   const pesquisaID = useSelector((state) => state.pesquisa.pesquisaID)
 
@@ -85,7 +85,7 @@ const ModifySearch = ({ navigation }) => {
 
     //realizar uma consulta para verificar se já nao existe uma pesquisa com o mesmo nome a ser atualizado, exceto pela pesquisa atual selecionada
     const pesquisas_SubCollection = collection(db, 'usuarios', userID, 'pesquisas');
-    const q = query(pesquisas_SubCollection, where('nome', '==', nome.toUpperCase()), where('__name__', '!=', pesquisaID)) // Ignora a pesquisa atual pelo ID para nao dar erro nela caso seu nome nao seja modificado.' __name__' é o id do doc no firestore
+    const q = query(pesquisas_SubCollection, where('nome', '==', nome.toUpperCase().trim()), where('__name__', '!=', pesquisaID)) // Ignora a pesquisa atual pelo ID para nao dar erro nela caso seu nome nao seja modificado.' __name__' é o id do doc no firestore
 
     //referencia ao documento de pesquisa selecionado através do id do documento
     const PesquisaID_Ref = doc(db, 'usuarios', userID, 'pesquisas', pesquisaID);
@@ -100,7 +100,7 @@ const ModifySearch = ({ navigation }) => {
       }
 
       await updateDoc(PesquisaID_Ref, {
-        nome: nome.toUpperCase(),
+        nome: nome.toUpperCase().trim(),
         data: data,
         imagem: imagem,
       });

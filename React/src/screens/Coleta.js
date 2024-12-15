@@ -2,14 +2,34 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native'; // Importar o hook useNavigation
+import { db } from '../firebase/config';
+import { doc, increment, updateDoc } from 'firebase/firestore';
 import { useSelector } from 'react-redux';
 
+//componente facebutton
+const FaceButton = ({ nomeIcone, corIcone, textoIcone, votoCampo }) => {
 
-const FaceButton = ({ nomeIcone, corIcone, textoIcone }) => {
   const navigation = useNavigation();
 
-  const goToAgradecimento = () => {
+  //Acessar dados de usuario e de pesquisa da store (ids)
+  const userID = useSelector((state) => state.login.userID);
+  const pesquisaID = useSelector((state) => state.pesquisa.pesquisaID)
+
+  const goToAgradecimento = async () => {
+
     navigation.navigate('Agradecimento');
+
+    //contabilizar voto no Fisrestore (atualização de documento)
+    try {
+      const PesquisaID_Ref = doc(db, 'usuarios', userID, 'pesquisas', pesquisaID);
+      await updateDoc(PesquisaID_Ref, {
+        [votoCampo]: increment(1) //define o nome do campo de forma dinamica e incrementa seu valor em 1 
+      });
+      console.log(`Voto registrado em ${votoCampo}`);
+    }
+    catch (error) {
+      console.log('Erro ao registar voto');
+    }
   };
 
   return (
@@ -27,7 +47,7 @@ const Coleta = () => {
   const nomePesquisa = useSelector((state) => state.pesquisa.nome);
   //pegar o ano atual da pesquisa
   const date = new Date();
- 
+
   return (
     <View style={styles.tela}>
       <View style={styles.cabecalho}>
@@ -35,14 +55,14 @@ const Coleta = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <FaceButton nomeIcone="sentiment-very-dissatisfied" corIcone="#D71616" textoIcone="Péssimo" />
-        <FaceButton nomeIcone="sentiment-dissatisfied" corIcone="#FF360A" textoIcone="Ruim" />
-        <FaceButton nomeIcone="sentiment-neutral" corIcone="#FFC632" textoIcone="Neutro" />
-        <FaceButton nomeIcone="sentiment-satisfied-alt" corIcone="#37BD6D" textoIcone="Bom" />
-        <FaceButton nomeIcone="sentiment-very-satisfied" corIcone="#25BC22" textoIcone="Excelente" />
+        <FaceButton nomeIcone="sentiment-very-dissatisfied" corIcone="#D71616" textoIcone="Péssimo" votoCampo="pessimo" />
+        <FaceButton nomeIcone="sentiment-dissatisfied" corIcone="#FF360A" textoIcone="Ruim" votoCampo="ruim" />
+        <FaceButton nomeIcone="sentiment-neutral" corIcone="#FFC632" textoIcone="Neutro" votoCampo="neutro" />
+        <FaceButton nomeIcone="sentiment-satisfied-alt" corIcone="#37BD6D" textoIcone="Bom" votoCampo="bom" />
+        <FaceButton nomeIcone="sentiment-very-satisfied" corIcone="#25BC22" textoIcone="Excelente" votoCampo="excelente" />
       </View>
 
-      {/* Botão de Voltar */}
+      {/* Botão de Voltar escondido */}
       <TouchableOpacity style={styles.voltarButton} onPress={() => navigation.goBack()}>
         <Icon name="arrow-back" size={45} color="#372775" />
       </TouchableOpacity>

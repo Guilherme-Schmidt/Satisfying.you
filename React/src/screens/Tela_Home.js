@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import { View, StyleSheet, Text, TextInput, FlatList, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardPesquisa from '../components/CardPesquisa';
@@ -33,21 +32,26 @@ const Tela_Home = () => {
       orderBy('timestamp', 'desc') //para as pesquisas mais novas aparecerem primeiro 
     );
 
-    //Função que executa a consulta (onSnapshot é executado sempre que houver alteração na coleção consultada)
+    //Função que executa a consulta (onSnapshot é executado sempre que houver alteração na coleção consultada (listener))
     const unsubscribe = onSnapshot(consultaPesquisas, (snapshot) => {
       const pesquisas = [];
       snapshot.forEach((doc) => {
         pesquisas.push({
           id: doc.id, //id do documento no firestore
           ...doc.data() //restante dos dados do documento
-        })
-      })
+        });
+      });
       //setar o state que armazenará as pesquisas
       setListaPesquisas(pesquisas);
-      //desabilitar o  ActivityIndicator
+      //desabilitar o  ActivityIndicator (fim da consulta)
       setLoading(false);
-    })
-  }, []) // [] para o useEffect ser excutado somente uma única vez nessa tela
+    });
+
+    //Função de limpeza para remover o listener ao desmontar o componente
+    return () => {
+      unsubscribe();
+    }
+  }, []); // [] sem dependencias, para o useEffect ser excutado somente uma única vez nessa tela
 
 
   const goToNovaPesquisa = () => {
@@ -60,7 +64,7 @@ const Tela_Home = () => {
     dispatch(reducerSetPesquisa({ pesquisaID: pesquisaID, nome: nome, data: data, imagem: imagem }));
     //navegar para AcoesPesquisa
     navigation.navigate('AcoesPesquisa');
-    console.log(pesquisaID)
+    console.log('ID da pesquisa: ' +pesquisaID);
   };
 
   //Componente para ser usado no renderItem da FlatList
