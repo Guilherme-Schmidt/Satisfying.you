@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   textoEmail: {
-    fontSize: 19,
+    fontSize: 15,
     color: '#fff',
     fontFamily: 'AveriaLibre-Regular',
   },
@@ -110,11 +110,11 @@ const styles = StyleSheet.create({
     drawerItemStyle: {
       borderWidth: 0,
       backgroundColor: '#2B1F5C',
+      marginBottom: 195
     },
   },
 
   footer: {
-    marginTop: '38%',
     marginLeft: '5%',
   },
 

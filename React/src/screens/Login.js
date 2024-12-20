@@ -179,7 +179,8 @@ const estilos = StyleSheet.create({
   },
 
   txtInput: {
-    height: 35,
+   
+    height: 38,
     backgroundColor: '#FFFFFF',
     color: '#3F92C5',
     fontFamily: 'AveriaLibre-Regular',
