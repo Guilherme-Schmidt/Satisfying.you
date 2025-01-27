@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
   divider: {
     height: 2,
     backgroundColor: '#fff',
-    marginBottom: 20,
+    marginBottom: 15,
     width: '75%',
     alignSelf: 'center',
   },
 
   drawerLabel: {
     fontFamily: 'AveriaLibre-Regular',
-    fontSize: 30,
+    fontSize: 27,
     textAlign: 'flex-start',
     width: '100%',
     color: '#fff',
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     drawerItemStyle: {
       borderWidth: 0,
       backgroundColor: '#2B1F5C',
-      marginBottom: 195
+      marginBottom: '45%'
     },
   },
 
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
 
   txtBotaoSair: {
-    fontSize: 30,
+    fontSize: 27,
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'AveriaLibre-Regular',
