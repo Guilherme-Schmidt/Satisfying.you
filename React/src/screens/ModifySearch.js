@@ -296,7 +296,7 @@ const estilo = StyleSheet.create({
   },
   loadingIndicator: {
     position: 'absolute',
-    right: 175,
+    right: 155,
   },
 
 });

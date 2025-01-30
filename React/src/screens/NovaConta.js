@@ -182,7 +182,7 @@ const estilo = StyleSheet.create({
 
   loadingIndicator: {
     position: 'absolute',
-    right: 170,
+    right: 150,
     top: 6
   },
 });

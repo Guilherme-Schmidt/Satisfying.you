@@ -233,7 +233,7 @@ const estilos = StyleSheet.create({
   },
   loadingIndicator: {
     position: 'absolute',
-    right: 200,
+    right: 185,
   },
 });
 

@@ -11,8 +11,8 @@ import {
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { db } from '../firebase/config';
-import { collection, addDoc, setDoc, doc, query, where, getDocs } from 'firebase/firestore';
-import { launchImageLibrary, launchCamera } from 'react-native-image-picker';
+import { collection, addDoc, setDoc, doc, query, where, getDocs, updateDoc } from 'firebase/firestore';
+import { launchImageLibrary } from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -75,17 +75,6 @@ const NewSearch = () => {
     });
   };
 
-  /*
-   // Capturar imagem da câmera
-   const captureImage = () => {
-    launchCamera({ mediaType: 'photo' }, (result) => {
-      if (result.assets && result.assets.length > 0) {
-        converteUriToBase64(result.assets[0].uri); // Converte a imagem capturada para base64
-      }
-    });
-  }
-  */
-
   //Calendário
   const onChangeDate = (event, selectedDate) => {
     if (event.type === 'set' && selectedDate) {
@@ -136,14 +125,14 @@ const NewSearch = () => {
         timestamp: new Date().getTime(), // Adiciona o timestamp como base para ordenação
       };
       //Adicionar documentos de pesquisa à subcoleção pesquisas
-      docRef = await addDoc(pesquisas_SubCollection, docPesquisa);
-      console.log("Novo documento de pesquisa inserido com sucesso: " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
+      const docRef = await addDoc(pesquisas_SubCollection, docPesquisa);
+      console.log("Novo documento de pesquisa inserido com sucesso (ID): " + docRef.id); //id do documento de pesquisa adicionado à subcoleção pesquisas
 
       //Adicionar campo email ao documento de usuário
       await setDoc(doc(db, 'usuarios', userID), {
         Email: userEmail
       });
-      console.log("Adição do campo Email no documento de usuário feita com sucesso");
+      //console.log("Adição do campo Email no documento de usuário feita com sucesso");
     }
     catch (error) {
       console.log("Erro ao adicionar pesquisa: " + error);
@@ -325,7 +314,7 @@ const estilo = StyleSheet.create({
   },
   loadingIndicator: {
     position: 'absolute',
-    right: 155,
+    right: 135,
   }
 
 });

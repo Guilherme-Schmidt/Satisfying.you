@@ -123,11 +123,11 @@ const estilos = StyleSheet.create({
     color: '#FD7979',
     marginTop: '2%',
     fontSize: 16,
-    fontFamily: 'AveriaLibre-Regular',
+    fontFamily: 'AveriaLire-Regular',
   },
   loadingIndicator: {
     position: 'absolute',
-    right: 190,
+    right: 170,
   },
 });
 
