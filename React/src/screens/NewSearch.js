@@ -6,12 +6,13 @@ import {
   TextInput,
   Image,
   ActivityIndicator,
-  Alert
+  Alert,
+  Keyboard
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { db } from '../firebase/config';
-import { collection, addDoc, setDoc, doc, query, where, getDocs, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, setDoc, doc, query, where, getDocs} from 'firebase/firestore';
 import { launchImageLibrary } from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import { format } from 'date-fns';
@@ -32,7 +33,7 @@ const NewSearch = () => {
 
   const verificaNome = (texto) => {
     setNome(texto);
-    if (texto === '') {
+    if (texto.trim() === '') {
       setErroNome('Preencha o nome da pesquisa');
     }
     else {
@@ -66,6 +67,7 @@ const NewSearch = () => {
 
   //escolher imagem na galeria
   const pickImage = () => {
+    Keyboard.dismiss();
     launchImageLibrary({ mediaType: 'photo' }, (result) => {
       //Verificar se uma imagem foi selecionada
       if (result.assets && result.assets.length > 0) {
@@ -143,7 +145,7 @@ const NewSearch = () => {
   };
 
   const cadastrarPesquisa = async () => {
-    if (nome === '' || data === '' || imagem === '') {
+    if (nome.trim() === '' || data === '' || imagem === '') {
       Alert.alert('Erro de Cadastro', 'Todos os campos devem ser preenchidos.');
       return; //encerra função
     }

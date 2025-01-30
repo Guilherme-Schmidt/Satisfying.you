@@ -6,7 +6,8 @@ import {
   TextInput,
   Image,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Keyboard
 } from 'react-native';
 import React, { useState } from 'react';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -55,6 +56,7 @@ const ModifySearch = ({ navigation }) => {
 
   //escolher imagem na galeria
   const pickImage = () => {
+    Keyboard.dismiss();
     launchImageLibrary({ mediaType: 'photo' }, (result) => {
       //Verificar se uma imagem foi selecionada
       if (result.assets && result.assets.length > 0) {
