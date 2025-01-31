@@ -46,8 +46,8 @@ const NewSearch = () => {
 
     const resizedImage = await ImageResizer.createResizedImage(
       uri, // URI da imagem original
-      200,  // Largura
-      200,  // Altura
+      500,  // Largura
+      500,  // Altura
       'JPEG', // Formato (JPEG ou PNG)
       100  // Qualidade (0-100)
     );

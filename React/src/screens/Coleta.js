@@ -13,7 +13,7 @@ const FaceButton = ({ nomeIcone, corIcone, textoIcone, votoCampo }) => {
 
   //Acessar dados de usuario e de pesquisa da store (ids)
   const userID = useSelector((state) => state.login.userID);
-  const pesquisaID = useSelector((state) => state.pesquisa.pesquisaID)
+  const pesquisaID = useSelector((state) => state.pesquisa.pesquisaID);
 
   const goToAgradecimento = async () => {
 
@@ -45,13 +45,15 @@ const Coleta = () => {
 
   //acessar o nome da pesquisa selecionada através da store
   const nomePesquisa = useSelector((state) => state.pesquisa.nome);
+
   //pegar o ano atual da pesquisa
-  const date = new Date();
+  const dataPesquisa = useSelector((state) => state.pesquisa.data);
+  const anoPesquisa = dataPesquisa.split("/")[2];
 
   return (
     <View style={styles.tela}>
       <View style={styles.cabecalho}>
-        <Text style={styles.questionText}>O que você achou do {nomePesquisa} {date.getFullYear()}</Text>
+        <Text style={styles.questionText}>O que você achou do {nomePesquisa} {anoPesquisa}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
